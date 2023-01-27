@@ -41,4 +41,8 @@ The following image shows the web application's appearance and functionality:
 
 * MIT Licence
 
+## Credits
+
+Dane Edwards: Thank you for the guidance and code snippets.
+
 
