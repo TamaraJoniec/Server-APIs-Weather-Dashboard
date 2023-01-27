@@ -1,4 +1,7 @@
-fetch("http://api.openweathermap.org/geo/1.0/direct?q=London&limit=5&appid=0780a07cd4320778ef6285e7998f12ae")
+// put whole fetch inside an event listener
+//  pull out string from the button: use event delegation event.target.textContent
+
+fetch("http://api.openweathermap.org/geo/1.0/direct?q=Leeds&limit=5&appid=0780a07cd4320778ef6285e7998f12ae")
 .then(response => response.json())
 .then(citySearch => {
     let city = citySearch[0]
