@@ -15,6 +15,7 @@
 //   * When a user click on a city in the search history they are again presented with current and future conditions for that city
 
 // global variables
+let presentLocation = "";
 
 let addedCity = (createPlace) => {
     let alreadyLogged = false;
@@ -29,9 +30,10 @@ let addedCity = (createPlace) => {
     }
 }
 let weatherNow = (event) => {
-    // put whole fetch inside an event listener
-    //  pull out string from the button: use event delegation event.target.textContent
-
+// get location from search
+    let city = document.getElementById("search-input").value;
+    presentLocation= document.getElementById("search-input").value;
+    // fetch weather data
     fetch("https://api.openweathermap.org/geo/1.0/direct?q=Leeds&limit=5&appid=0780a07cd4320778ef6285e7998f12ae")
         .then(response => response.json())
         .then(citySearch => {
@@ -60,6 +62,8 @@ let weatherNow = (event) => {
 weatherNow();
 
 // to display the record of searches
+let recentCity = "";
+
 let displaySearches = () => {
     document.querySelector('#search-history').empty();
     if (localStorage.length === 0) {
