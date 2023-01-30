@@ -16,23 +16,45 @@
 
 // global variables
 
-let weatherNow = (event) => { 
-// put whole fetch inside an event listener
-//  pull out string from the button: use event delegation event.target.textContent
+var addedCity = (addPlace) => {
+    let alreadyLogged = false;
+    for (let i = 0; i < localStorage.length; i++) {
+        if (localStorage["cities" + i] === addPlace) {
+            alreadyLogged = true;
+            break;
+        }
+    }
+    if (alreadyLogged === false) {
+        localStorage.setItem('cities' + localStorage.length, addPlace);
+    }
+}
+let weatherNow = (event) => {
+    // put whole fetch inside an event listener
+    //  pull out string from the button: use event delegation event.target.textContent
 
-fetch("https://api.openweathermap.org/geo/1.0/direct?q=Leeds&limit=5&appid=0780a07cd4320778ef6285e7998f12ae")
-.then(response => response.json())
-.then(citySearch => {
-    let city = citySearch[0]
-    console.log(city.lat);
-    console.log(city.lon);
+    fetch("https://api.openweathermap.org/geo/1.0/direct?q=Leeds&limit=5&appid=0780a07cd4320778ef6285e7998f12ae")
+        .then(response => response.json())
+        .then(citySearch => {
+            let city = citySearch[0]
+            console.log(city.lat);
+            console.log(city.lon);
 
-    return fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&appid=0780a07cd4320778ef6285e7998f12ae`)
+            return fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&appid=0780a07cd4320778ef6285e7998f12ae`)
 
-})
-.then(response => response.json())
-.then(data => {
-    console.log(data);
-})
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            // adding to local storage
+            addedCity(city);
+            // moments to work out times
+            let liveTime = response.dt;
+            let liveTimeOFFset = response.timezone;
+            let liveHourOFFset = liveTimeOFFset / 60 / 60;
+            let now = moment.unix(liveTime).utc().utcOffset(liveHourOFFset);
+
+            // formula to get icon
+            let displayIcon = "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png";
+        })
 
 }
