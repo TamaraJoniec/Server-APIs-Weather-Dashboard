@@ -54,21 +54,24 @@ let weatherNow = (event) => {
             let liveTimeOFFset = response.timezone;
             let liveHourOFFset = liveTimeOFFset / 60 / 60;
             let now = moment.unix(liveTime).utc().utcOffset(liveHourOFFset);
-            })
-
+        })
+    displaySearches();
 }
+weatherNow();
+
 // to display the record of searches
 let displaySearches = () => {
     document.querySelector('#search-history').empty();
-    if (localStorage.length===0){
-        if (recentCity){
+    if (localStorage.length === 0) {
+        if (recentCity) {
             document.querySelector('#search-input').setAttribute("value", recentCity);
         } else {
             document.querySelector('#search-city').setAttribute("value", "Leeds");
         }
     } else {
-
+        let recentCityEl = "city" + (localStorage.length - 1);
+        recentCity = localStorage.getItem(recentCityEl);
+        document.querySelector('#search-city').setAttribute("value", recentCity);
     }
-    
-    
 }
+displaySearches();
