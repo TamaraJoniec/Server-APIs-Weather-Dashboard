@@ -66,27 +66,27 @@ let displaySearches = () => {
         if (recentCity) {
             document.querySelector('#search-input').setAttribute("value", recentCity);
         } else {
-            document.querySelector('#search-city').setAttribute("value", "Leeds");
+            document.querySelector('#search-input').setAttribute("value", "Leeds");
         }
     } else {
         // creating a log of searched cities to append
         let recentactiveCity = "city" + (localStorage.length - 1);
         recentCity = localStorage.getItem(recentactiveCity);
-        document.querySelector('#search-city').setAttribute("value", recentCity);
+        document.querySelector('#search-input').setAttribute("value", recentCity);
     }
     for (let i = 0; i < localStorage.length; i++) {
         let location = localStorage.getItem("city" + i);
         let activeCity;
-        if (presentLocation===""){
-            presentLocation=recentCity;
+        if (presentLocation === "") {
+            presentLocation = recentCity;
         }
         if (location === presentLocation) {
             activeCity = `<button type="button" class="btn btn-secondary">${location}</button></li>`;
         } else {
             activeCity = `<button type="button" class="btn btn-secondary">${location}</button></li>`;
-        } 
+        }
         document.querySelector('#search-history').prepend(activeCity);
-}
+    }
 }
 
 displaySearches();
@@ -96,4 +96,11 @@ document.getElementById("search-button").addEventListener("click", (event) => {
     event.preventDefault();
     presentLocation = document.getElementById("search-input").value;
     weatherNow(event);
-    });
+});
+//Event listener for recent city search buttons
+document.getElementById("search-history").addEventListener("click", (event) => {
+    event.preventDefault();
+    document.getElementById("search-input").val(event.target.textContent);
+    presentLocation = document.getElementById("search-input").value;
+    weatherNow(event);
+});
