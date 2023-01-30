@@ -85,6 +85,8 @@ let displaySearches = () => {
         } else {
             activeCity = `<button type="button" class="btn btn-secondary">${location}</button></li>`;
         } 
-
+        document.querySelector('#search-history').prepend(activeCity);
 }
+}
+
 displaySearches();
