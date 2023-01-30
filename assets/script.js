@@ -19,7 +19,7 @@
 let addedCity = (createPlace) => {
     let alreadyLogged = false;
     for (let i = 0; i < localStorage.length; i++) {
-        if (localStorage["city" + i] === createPlace) {
+        if (localStorage['city' + i] === createPlace) {
             alreadyLogged = true;
             break;
         }
@@ -56,4 +56,19 @@ let weatherNow = (event) => {
             let now = moment.unix(liveTime).utc().utcOffset(liveHourOFFset);
             })
 
+}
+// to display the record of searches
+let displaySearches = () => {
+    document.querySelector('#search-history').empty();
+    if (localStorage.length===0){
+        if (recentCity){
+            document.querySelector('#search-input').setAttribute("value", recentCity);
+        } else {
+            document.querySelector('#search-city').setAttribute("value", "Leeds");
+        }
+    } else {
+
+    }
+    
+    
 }
