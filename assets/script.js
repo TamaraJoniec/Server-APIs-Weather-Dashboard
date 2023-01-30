@@ -69,9 +69,22 @@ let displaySearches = () => {
             document.querySelector('#search-city').setAttribute("value", "Leeds");
         }
     } else {
-        let recentCityEl = "city" + (localStorage.length - 1);
-        recentCity = localStorage.getItem(recentCityEl);
+        // creating a log of searched cities to append
+        let recentactiveCity = "city" + (localStorage.length - 1);
+        recentCity = localStorage.getItem(recentactiveCity);
         document.querySelector('#search-city').setAttribute("value", recentCity);
     }
+    for (let i = 0; i < localStorage.length; i++) {
+        let location = localStorage.getItem("city" + i);
+        let activeCity;
+        if (presentLocation===""){
+            presentLocation=recentCity;
+        }
+        if (location === presentLocation) {
+            activeCity = `<button type="button" class="btn btn-secondary">${location}</button></li>`;
+        } else {
+            activeCity = `<button type="button" class="btn btn-secondary">${location}</button></li>`;
+        } 
+
 }
 displaySearches();
