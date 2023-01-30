@@ -90,3 +90,10 @@ let displaySearches = () => {
 }
 
 displaySearches();
+
+//Event listener for search button
+document.getElementById("search-button").addEventListener("click", (event) => {
+    event.preventDefault();
+    presentLocation = document.getElementById("search-input").value;
+    weatherNow(event);
+    });
