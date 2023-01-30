@@ -16,16 +16,16 @@
 
 // global variables
 
-var addedCity = (addPlace) => {
+let addedCity = (createPlace) => {
     let alreadyLogged = false;
     for (let i = 0; i < localStorage.length; i++) {
-        if (localStorage["cities" + i] === addPlace) {
+        if (localStorage["city" + i] === createPlace) {
             alreadyLogged = true;
             break;
         }
     }
     if (alreadyLogged === false) {
-        localStorage.setItem('cities' + localStorage.length, addPlace);
+        localStorage.setItem('city' + localStorage.length, createPlace);
     }
 }
 let weatherNow = (event) => {
@@ -47,14 +47,13 @@ let weatherNow = (event) => {
             console.log(data);
             // adding to local storage
             addedCity(city);
-            // moments to work out times
+            // formula to get icon
+            let displayIcon = "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png";
+            // moments for timings
             let liveTime = response.dt;
             let liveTimeOFFset = response.timezone;
             let liveHourOFFset = liveTimeOFFset / 60 / 60;
             let now = moment.unix(liveTime).utc().utcOffset(liveHourOFFset);
-
-            // formula to get icon
-            let displayIcon = "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png";
-        })
+            })
 
 }
