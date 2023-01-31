@@ -41,13 +41,18 @@
         </form>
 
         <!-- search history list -->
-        <div id="left-side">
+        <div class="container-fluid-left-side">
           <ul class="list-group mt-4" id="search-history">
             <div id="buttons-view"></div>
           </ul>
         </div>
       </aside>
-
+  <!-- live weather banner-->
+          <div class="col-12 col-sm-12 col-md-8 float-right">
+            <div>
+              <h2 class="subtitle bg-light">Live Weather</h2>
+              <div class="city"></div>
+            </div>
       <!-- Weather information on right -->
       <div class="col-lg-9 pb-3" id="right-side">
         <!-- Main search banner display -->
@@ -55,10 +60,8 @@
           <h2>Five day forecast</h2>
         </section>
 
-        <!-- right hand side area with other cities displayed -->
-        <div id="content-right" class="col-md-9 pt-4">
-          <!-- live weather -->
-          <div id="live-weather"></div>
+
+        
           <!-- Five day -->
           <div id="five-day" class="mt-5"></div>
         </div>
