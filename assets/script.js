@@ -1,45 +1,33 @@
-// * Create a weather dashboard with form inputs.
-//   * When a user searches for a city they are presented with current and future conditions for that city and that city is added to the search history
-//   * When a user views the current weather conditions for that city they are presented with:
-//     * The city name
-//     * The date
-//     * An icon representation of weather conditions
-//     * The temperature
-//     * The humidity
-//     * The wind speed
-//   * When a user view future weather conditions for that city they are presented with a 5-day forecast that displays:
-//     * The date
-//     * An icon representation of weather conditions
-//     * The temperature
-//     * The humidity
-//   * When a user click on a city in the search history they are again presented with current and future conditions for that city
-
 // global variables
-let presentLocation = "";
 
-let addedCity = (createPlace) => {
+let iconDivs = `<div id="icon"><img id="weather-icon" src="http://openweathermap.org/img/wn/10d@2x.png" alt="Weather Icon"</div>`
+let recentCity = "";
+let location = document.getElementById("search-input").value;
+let codeIcon = list.weather[0].icon;
+let urlIcon = "https://openweathermap.org/img/w/" + codeIcon + ".png";
+let city = document.getElementById("search-input").value;
+let presentLocation = document.getElementById("search-input").value;
+
+// DOM elements
+document.getElementById("main-city").innerText = response.name;
+document.getElementById("forecast5").innerHTML = HTMLforecast5;
+
+// adding city to local storage
+function addedCity(createPlace) {
     let alreadyLogged = false;
     for (let i = 0; i < localStorage.length; i++) {
         if (localStorage['city' + i] === createPlace) {
             alreadyLogged = true;
             break;
         }
-        // formula to get icon
-        let codeIcon = a.weather[0].icon;
-        // concatenate the variable with the url
-        let urlIcon = "https://openweathermap.org/img/w/" + codeIcon + ".png";
-
     }
     if (alreadyLogged === false) {
         localStorage.setItem('city' + localStorage.length, createPlace);
     }
 }
-let iconDivs = `<div id="icon"><img id="weather-icon" src="http://openweathermap.org/img/wn/10d@2x.png" alt="Weather Icon"</div>`
 
-let weatherNow = (event) => {
+let weatherNow = () => {
     // get location from search
-    let city = document.getElementById("search-input").value;
-    presentLocation = document.getElementById("search-input").value;
     // fetch weather data
     fetch("https://api.openweathermap.org/geo/1.0/direct?q=Leeds&limit=5&appid=0780a07cd4320778ef6285e7998f12ae")
         .then(response => response.json())
@@ -67,8 +55,18 @@ let weatherNow = (event) => {
 }
 weatherNow();
 
+
+let htmlWeatherNow = `
+            <h3>${response} ${now.format("MM/DD/YYYY HH:mm:ss")}<img src="${displayIcon}"></h3>
+            <ul class="list">
+                <li>Temp.: ${response.main.temp}</li>
+                 <li>Wind: ${response.wind.speed} mph</li>
+                 <li>Humidity: ${response.main.humidity}%</li>
+            </ul>`;
+document.getElementById("weather-now").innerHTML = htmlWeatherNow;
+
 // to display the record of searches
-let recentCity = "";
+
 
 let displaySearches = () => {
     document.querySelector('#search-history').replaceChildren();
@@ -99,10 +97,7 @@ let displaySearches = () => {
     }
 }
 
-displaySearches();
-
 let forecast5 = (event) => {
-    let location = document.getElementById("search-input").value;
     // fetch weather data
     fetch("https://api.openweathermap.org/geo/1.0/direct?q=Leeds&limit=5&appid=0780a07cd4320778ef6285e7998f12ae")
         .then(response => response.json())
@@ -122,7 +117,9 @@ let forecast5 = (event) => {
             // formula to get icon
             displayIcon = `https://openweathermap.org/img/w/${city.weather.icon}`;
         })
+    forecast5(event);
 };
+
 
 let HTMLforecast5 = `<h1>Five Day Weather Forecast</h1>
 <section class="d-inline-flex flex-wrap" id="forecast5Cards">`
@@ -133,10 +130,26 @@ for (let i = 0; i < localStorage.length; i++) {
     let hourDifference = timeDifference / 60 / 60;
     rightNow = moment.unix(time).utc().utcOffset(hourDifference);
     // formula to get icon
-    lcodeIcon = list.weather[0].icon;
+    codeIcon = list.weather[0].icon;
     // concatenate the variable with the url
     displayIcon = "https://openweathermap.org/img/w/" + city.weather[0].icon + ".png";
+
+    if (rightNow.format("HH:mm:ss") === "11:00:00" || rightNow.format("HH:mm:ss") === "12:00:00" || rightNow.format("HH:mm:ss") === "13:00:00") {
+        HTMLforecast5 += `
+            <div class="weather-card card m-2 p0">
+                <ul class="list-unstyled p-3">
+                    <li>${rightNow.format("MM/DD/YYYY")}</li>
+                    <li class="weather-icon"><img src="${urlIcon}"></li>
+                    <li>Temp: ${days.main.temp}&#8457;</li>
+                    <br>
+                    <li>Humidity: ${days.main.humidity}%</li>
+                </ul>
+            </div>`;
+    }
 }
+HTMLforecast5 += `</div>`;
+
+
 //Event listener for search button
 document.getElementById("search-button").addEventListener("click", (event) => {
     event.preventDefault();
@@ -149,6 +162,7 @@ document.getElementById("search-history").addEventListener("click", (event) => {
     document.getElementById("search-input").val(event.target.textContent);
     presentLocation = document.getElementById("search-input").value;
     weatherNow(event);
-});
+}
+);
 
 displaySearches();
