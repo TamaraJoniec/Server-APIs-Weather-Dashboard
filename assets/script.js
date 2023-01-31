@@ -1,13 +1,9 @@
 // global variables
 let iconDivs = `<div id="icon"><img id="weather-icon" src="http://openweathermap.org/img/wn/10d@2x.png" alt="Weather Icon"</div>`
 let recentCity = "";
-let location = document.getElementById("search-input").value;
 let codeIcon = list.weather[0].icon;
 let urlIcon = "https://openweathermap.org/img/w/" + codeIcon + ".png";
-let city = document.getElementById("search-input").value;
-let presentLocation = document.getElementById("search-input").value;
 let cities = [""];
-let buttonsView = document.querySelector("#buttons-view");
 
 // moments for timings
 let liveTime = list[0].weather.dt;
@@ -16,22 +12,42 @@ let liveHourOFFset = liveTimeOFFset / 60 / 60;
 let now = moment.unix(liveTime).utc().utcOffset(liveHourOFFset);
 
 // DOM elements
+let HTMLforecast5 = document.getElementById("forecast5").innerHTML
+let location = document.getElementById("input").value;
+let city = document.getElementById("input").value;
+let buttonsView = document.querySelector("#buttons-view");
+let presentLocation = document.querySelector("#search-input").value;
 document.getElementById("main-city").innerText = response.name;
-document.getElementById("forecast5").innerHTML = HTMLforecast5;
+// "trying new function to append city results and display in search records"
 
+function appendCity(){
+
+    myCitySearch = document.getElementById("searchInput").value;  
+    searchRecord = findData();
+    let cityFind =$("<div>") 
+    cityFind.attr('id',myCitySearch) 
+    cityFind.text(myCitySearch) 
+    cityFind.addClass("h4")
+        
+    if (searchRecord.includes(myCitySearch) === false){
+        $(".history").append(cityFind)
+    }
+    $(".subtitle").attr("style","display:inline")
+    cityLocalStorage(myCitySearch);
+    
+
+}; 
 // adding city to local storage
-function addedCity(createPlace) {
-    let alreadyLogged = false;
-    for (let i = 0; i < localStorage.length; i++) {
-        if (localStorage['city' + i] === createPlace) {
-            alreadyLogged = true;
-            break;
-        }
+function cityLocalStorage (n) {
+    let addedList = findData();
+
+    if (searchRecord.includes(myCitySearch) === false){
+        addedList.push(n);
     }
-    if (alreadyLogged === false) {
-        localStorage.setItem('city' + localStorage.length, createPlace);
-    }
-}
+   
+    localStorage.setItem("city", JSON.stringify(addedList));
+    
+};
 
 // Function for displaying cities
 function makeButtons() {
@@ -150,8 +166,9 @@ let forecast5 = (event) => {
 };
 
 
-let HTMLforecast5 = `<h1>Five Day Weather Forecast</h1>
-<section class="d-inline-flex flex-wrap" id="forecast5Cards">`
+HTMLforecast5 = `<h1>Five Day Weather Forecast</h1>
+<section class="d-inline-flex flex-wrap" id="forecast5Cards">
+`
 for (let i = 0; i < localStorage.length; i++) {
     let days = list[i].weather.dt;
     let time = days.dt;

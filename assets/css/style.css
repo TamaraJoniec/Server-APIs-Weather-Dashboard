@@ -41,5 +41,16 @@ h1, h2 {
 }
 #search-button:hover {
     color: var(--yellow);
+}
 
+#forecast5Cards {
+    margin-bottom: 10px;
+    padding: 1.5%;
+    border-radius: var(--border-radius);
+    background-color: var(--gray);
+    color: var(--light);
+    text-decoration: none;
+    margin-right: 10px;
+    height: 250px;
+    line-height: 1.8;
 }
