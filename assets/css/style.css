@@ -1,3 +1,7 @@
-.list-group {
-    background-color: aqua;
+body {
+    background: #83a4d4;
+    /* backup for old browsers */
+    background: -webkit-linear-gradient(to right, #b6fbff, #83a4d4);
+    /* most browsers */
+    background: linear-gradient(to right, #b6fbff, #83a4d4);
 }

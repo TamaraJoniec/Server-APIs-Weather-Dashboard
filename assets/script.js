@@ -8,6 +8,13 @@ let city = document.getElementById("search-input").value;
 let presentLocation = document.getElementById("search-input").value;
 let cities = [""];
 let buttonsView = document.querySelector("#buttons-view");
+
+// moments for timings
+let liveTime = list[0].weather.dt;
+let liveTimeOFFset = response.timezone;
+let liveHourOFFset = liveTimeOFFset / 60 / 60;
+let now = moment.unix(liveTime).utc().utcOffset(liveHourOFFset);
+
 // DOM elements
 document.getElementById("main-city").innerText = response.name;
 document.getElementById("forecast5").innerHTML = HTMLforecast5;
@@ -72,11 +79,7 @@ let weatherNow = () => {
             addedCity(city);
             // changing src attributes in the DOM
             document.getElementById("weather-icon").setAttribute('src', urlIcon);
-            // moments for timings
-            let liveTime = list[0].weather.dt;
-            let liveTimeOFFset = response.timezone;
-            let liveHourOFFset = liveTimeOFFset / 60 / 60;
-            now = moment.unix(liveTime).utc().utcOffset(liveHourOFFset);
+
         });
 }
 weatherNow();
