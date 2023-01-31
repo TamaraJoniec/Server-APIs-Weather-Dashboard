@@ -1,5 +1,4 @@
 // global variables
-
 let iconDivs = `<div id="icon"><img id="weather-icon" src="http://openweathermap.org/img/wn/10d@2x.png" alt="Weather Icon"</div>`
 let recentCity = "";
 let location = document.getElementById("search-input").value;
@@ -7,7 +6,8 @@ let codeIcon = list.weather[0].icon;
 let urlIcon = "https://openweathermap.org/img/w/" + codeIcon + ".png";
 let city = document.getElementById("search-input").value;
 let presentLocation = document.getElementById("search-input").value;
-
+let cities = [""];
+let buttonsView = document.querySelector("#buttons-view");
 // DOM elements
 document.getElementById("main-city").innerText = response.name;
 document.getElementById("forecast5").innerHTML = HTMLforecast5;
@@ -25,6 +25,32 @@ function addedCity(createPlace) {
         localStorage.setItem('city' + localStorage.length, createPlace);
     }
 }
+
+// Function for displaying cities
+function makeButtons() {
+    // for loop
+    for (let i = 0; i < cities.length; i++) {
+        const element = cities[i];
+        // create element
+        let newBtn = document.createElement("button")
+        // give it text or content
+        newBtn.textContent = cities[i]
+        // put it on page or append
+        buttonsView.appendChild(newBtn)
+    }
+}
+// This function handles events where one button is clicked
+$("#add-city").on("click", function (event) {
+    event.preventDefault();
+    buttonsView.innerHTML = "";
+    let newCity = document.querySelector("#search-input").value;
+    movies.push(newCity);
+    makeButtons();
+    console.log(newCity)
+});
+
+// Calling the makeButtons function to display the initial list of cities
+makeButtons();
 
 let weatherNow = () => {
     // get location from search
