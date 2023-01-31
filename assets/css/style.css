@@ -1,3 +1,10 @@
+:root {
+    --light: #A7CFDF;
+    --aqua: #62B7D9;
+    ---sky-blue: #79a3c8;
+    --medium: #4B8CA6;
+    --dark-blue: #0C234E;
+}
 body {
     background: #83a4d4;
     /* backup for old browsers */
