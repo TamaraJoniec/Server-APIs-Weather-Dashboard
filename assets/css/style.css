@@ -1,14 +1,36 @@
 :root {
     --light: #A7CFDF;
-    --aqua: #62B7D9;
-    ---sky-blue: #79a3c8;
-    --medium: #4B8CA6;
-    --dark-blue: #0C234E;
+    --pink: #D95276;
+    --aqua: #04BF9D;
+    ---yellow: #F2CB05;
+    --orange: #F29F05;
+    --gray: #58748C;
 }
+
 body {
     background: #83a4d4;
     /* backup for old browsers */
     background: -webkit-linear-gradient(to right, #b6fbff, #83a4d4);
     /* most browsers */
     background: linear-gradient(to right, #b6fbff, #83a4d4);
+}
+
+#page-title {
+    font-weight: 700;
+    margin: 0;
+    color: var(--light);
+    line-height: 1.25;
+}
+h1, h2 {
+    font-weight: 700;
+    margin: 0;
+    color: var(--gray);
+    line-height: 1.25;
+}
+#search-button {
+    color: var(--aqua)
+}
+#search-button:hover {
+    color: var(--yellow);
+
 }
