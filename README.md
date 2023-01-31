@@ -45,4 +45,14 @@ The following image shows the web application's appearance and functionality:
 
 Dane Edwards: Thank you for the guidance and code snippets.
 
+## References
+https://www.educative.io/answers/difference-between-d-flex-and-d-inline-flex-in-bootstrap-4
+
+https://tobiasahlin.com/blog/move-from-jquery-to-vanilla-javascript/
+
+https://openweathermap.org/forecast5
+
+https://getbootstrap.com/docs/4.6/getting-started/introduction/
+
+
 

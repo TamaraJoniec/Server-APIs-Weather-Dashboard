@@ -24,15 +24,22 @@ let addedCity = (createPlace) => {
             alreadyLogged = true;
             break;
         }
+        // formula to get icon
+        let codeIcon = a.weather[0].icon;
+        // concatenate the variable with the url
+        let urlIcon = "https://openweathermap.org/img/w/" + codeIcon + ".png";
+
     }
     if (alreadyLogged === false) {
         localStorage.setItem('city' + localStorage.length, createPlace);
     }
 }
+let iconDivs = `<div id="icon"><img id="weather-icon" src="http://openweathermap.org/img/wn/10d@2x.png" alt="Weather Icon"</div>`
+
 let weatherNow = (event) => {
-// get location from search
+    // get location from search
     let city = document.getElementById("search-input").value;
-    presentLocation= document.getElementById("search-input").value;
+    presentLocation = document.getElementById("search-input").value;
     // fetch weather data
     fetch("https://api.openweathermap.org/geo/1.0/direct?q=Leeds&limit=5&appid=0780a07cd4320778ef6285e7998f12ae")
         .then(response => response.json())
@@ -49,15 +56,14 @@ let weatherNow = (event) => {
             console.log(data);
             // adding to local storage
             addedCity(city);
-            // formula to get icon
-            let displayIcon = "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png";
+            // changing src attributes in the DOM
+            document.getElementById("weather-icon").setAttribute('src', urlIcon);
             // moments for timings
-            let liveTime = response.dt;
+            let liveTime = list[0].weather.dt;
             let liveTimeOFFset = response.timezone;
             let liveHourOFFset = liveTimeOFFset / 60 / 60;
-            let now = moment.unix(liveTime).utc().utcOffset(liveHourOFFset);
-        })
-    displaySearches();
+            now = moment.unix(liveTime).utc().utcOffset(liveHourOFFset);
+        });
 }
 weatherNow();
 
@@ -65,7 +71,7 @@ weatherNow();
 let recentCity = "";
 
 let displaySearches = () => {
-    document.querySelector('#search-history').empty();
+    document.querySelector('#search-history').replaceChildren();
     if (localStorage.length === 0) {
         if (recentCity) {
             document.querySelector('#search-input').setAttribute("value", recentCity);
@@ -97,26 +103,40 @@ displaySearches();
 
 let forecast5 = (event) => {
     let location = document.getElementById("search-input").value;
- // fetch weather data
- fetch("https://api.openweathermap.org/geo/1.0/direct?q=Leeds&limit=5&appid=0780a07cd4320778ef6285e7998f12ae")
- .then(response => response.json())
- .then(citySearch => {
-     let city = citySearch[0]
-     console.log(city.lat);
-     console.log(city.lon);
+    // fetch weather data
+    fetch("https://api.openweathermap.org/geo/1.0/direct?q=Leeds&limit=5&appid=0780a07cd4320778ef6285e7998f12ae")
+        .then(response => response.json())
+        .then(citySearch => {
+            let city = citySearch[0]
+            console.log(city.lat);
+            console.log(city.lon);
 
-     return fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&appid=0780a07cd4320778ef6285e7998f12ae`)
+            return fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&appid=0780a07cd4320778ef6285e7998f12ae`)
 
- })
- .then(response => response.json())
- .then(data => {
-     console.log(data);
-     // adding to local storage
-     addedCity(city);
-     // formula to get icon
-     let displayIcon = "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png";
- })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            // adding to local storage
+            addedCity(city);
+            // formula to get icon
+            displayIcon = `https://openweathermap.org/img/w/${city.weather.icon}`;
+        })
 };
+
+let HTMLforecast5 = `<h1>Five Day Weather Forecast</h1>
+<section class="d-inline-flex flex-wrap" id="forecast5Cards">`
+for (let i = 0; i < localStorage.length; i++) {
+    let days = list[i].weather.dt;
+    let time = days.dt;
+    let timeDifference = response.location.timezone;
+    let hourDifference = timeDifference / 60 / 60;
+    rightNow = moment.unix(time).utc().utcOffset(hourDifference);
+    // formula to get icon
+    lcodeIcon = list.weather[0].icon;
+    // concatenate the variable with the url
+    displayIcon = "https://openweathermap.org/img/w/" + city.weather[0].icon + ".png";
+}
 //Event listener for search button
 document.getElementById("search-button").addEventListener("click", (event) => {
     event.preventDefault();
@@ -130,3 +150,5 @@ document.getElementById("search-history").addEventListener("click", (event) => {
     presentLocation = document.getElementById("search-input").value;
     weatherNow(event);
 });
+
+displaySearches();
