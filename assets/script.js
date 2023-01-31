@@ -12,7 +12,6 @@ let liveHourOFFset = liveTimeOFFset / 60 / 60;
 let now = moment.unix(liveTime).utc().utcOffset(liveHourOFFset);
 
 // DOM elements
-let HTMLforecast5 = document.getElementById("forecast5").innerHTML
 let location = document.getElementById("input").value;
 let city = document.getElementById("input").value;
 let buttonsView = document.querySelector("#buttons-view");
@@ -20,126 +19,165 @@ let presentLocation = document.querySelector("#search-input").value;
 document.getElementById("main-city").innerText = response.name;
 // "trying new function to append city results and display in search records"
 
-function appendCity(){
+function appendCity() {
 
-    myCitySearch = document.getElementById("searchInput").value;  
+    myCitySearch = document.getElementById("searchInput").value;
     searchRecord = findData();
-    let cityFind =$("<div>") 
-    cityFind.attr('id',myCitySearch) 
-    cityFind.text(myCitySearch) 
+    let cityFind = $("<div>")
+    cityFind.attr('id', myCitySearch)
+    cityFind.text(myCitySearch)
     cityFind.addClass("h4")
-        
-    if (searchRecord.includes(myCitySearch) === false){
+
+    if (searchRecord.includes(myCitySearch) === false) {
         $(".history").append(cityFind)
     }
-    $(".subtitle").attr("style","display:inline")
+    $(".subtitle").attr("style", "display:inline")
     cityLocalStorage(myCitySearch);
-    
 
-}; 
+
+};
+
+function findData() {
+    let currentList = localStorage.getItem("city");
+    if (currentList !== null) {
+        newList = JSON.parse(currentList);
+        return newList;
+    } else {
+        newList = [];
+    }
+    return newList;
+}
 // adding city to local storage
-function cityLocalStorage (n) {
+function cityLocalStorage(n) {
     let addedList = findData();
 
-    if (searchRecord.includes(myCitySearch) === false){
+    if (searchRecord.includes(myCitySearch) === false) {
         addedList.push(n);
     }
-   
+
     localStorage.setItem("city", JSON.stringify(addedList));
-    
+
 };
 
 // Function for displaying cities
-function makeButtons() {
-    // for loop
-    for (let i = 0; i < cities.length; i++) {
-        const element = cities[i];
-        // create element
-        let newBtn = document.createElement("button")
-        // give it text or content
-        newBtn.textContent = cities[i]
-        // put it on page or append
-        buttonsView.appendChild(newBtn)
+//display history search data
+function displayData() {
+    let searchRecord = findData();
+    for (let i = 0; i < searchRecord.length; i++) {
+        let myCitySearch = searchRecord[i];
+        let cityFind = $("<div>")
+        cityFind.attr('id', myCitySearch)
+        cityFind.text(myCitySearch)
+        cityFind.addClass("h4")
+
+        $(".history").append(cityFind)
     }
-}
-// This function handles events where one button is clicked
-$("#add-city").on("click", function (event) {
-    event.preventDefault();
-    buttonsView.innerHTML = "";
-    let newCity = document.querySelector("#search-input").value;
-    movies.push(newCity);
-    makeButtons();
-    console.log(newCity)
-});
+};
 
-// Calling the makeButtons function to display the initial list of cities
-makeButtons();
-
-let weatherNow = () => {
-    // get location from search
-    // fetch weather data
-    fetch("https://api.openweathermap.org/geo/1.0/direct?q=Leeds&limit=5&appid=0780a07cd4320778ef6285e7998f12ae")
-        .then(response => response.json())
-        .then(citySearch => {
-            let city = citySearch[0]
-            console.log(city.lat);
-            console.log(city.lon);
-
-            return fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&appid=0780a07cd4320778ef6285e7998f12ae`)
-
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            // adding to local storage
-            addedCity(city);
-            // changing src attributes in the DOM
-            document.getElementById("weather-icon").setAttribute('src', urlIcon);
-
-        });
-}
-weatherNow();
+displayData();
 
 
-let htmlWeatherNow = `
-            <h3>${response} ${now.format("MM/DD/YYYY HH:mm:ss")}<img src="${displayIcon}"></h3>
-            <ul class="list">
-                <li>Temp.: ${response.main.temp}</li>
-                 <li>Wind: ${response.wind.speed} mph</li>
-                 <li>Humidity: ${response.main.humidity}%</li>
-            </ul>`;
-document.getElementById("weather-now").innerHTML = htmlWeatherNow;
+function weatherNow() {
 
-// to display the record of searches
+    $(".five-day").empty();
+    $(".city").empty()
+
+    myCitySearch = document.getElementById("searchInput").value;
+    let cityCode = myCitySearch;
+
+    let cityLon;
+    let cityLat;
+    let cityTitle = $("<h>")
+    cityTitle.addClass("h3")
+    let temperature = $("<div>")
+    let wind = $("<div>")
+    let humidity = $("<div>")
+    let icon = $("<img>")
+    icon.addClass("icon");
+    let dateTime = $("<div>")
+
+    document.getElementByClassName("city").classList.add("list-group")
+    document.getElementByClassName("city").append(cityTitle)
+    document.getElementByClassName("city").append(dateTime)
+    document.getElementByClassName("city").append(icon)
+    document.getElementByClassName("city").append(temperature)
+    document.getElementByClassName("city").append(wind)
+    document.getElementByClassName("city").append(humidity)
 
 
-let displaySearches = () => {
-    document.querySelector('#search-history').replaceChildren();
-    if (localStorage.length === 0) {
-        if (recentCity) {
-            document.querySelector('#search-input').setAttribute("value", recentCity);
-        } else {
-            document.querySelector('#search-input').setAttribute("value", "Leeds");
-        }
-    } else {
-        // creating a log of searched cities to append
-        let recentactiveCity = "city" + (localStorage.length - 1);
-        recentCity = localStorage.getItem(recentactiveCity);
-        document.querySelector('#search-input').setAttribute("value", recentCity);
+    function locationURL() {
+        // get location from search
+        // fetch weather data
+        fetch("https://api.openweathermap.org/geo/1.0/direct?q=Leeds&limit=5&appid=0780a07cd4320778ef6285e7998f12ae")
+            .then(response => response.json())
+            .then(citySearch => {
+                let city = citySearch[0];
+                console.log(city.lat);
+                console.log(city.lon);
+
+                return fetch('https://api.openweathermap.org/geo/1.0/direct?q=' + cityCode + "," + countryCode + "&limit=5&appid=0780a07cd4320778ef6285e7998f12ae");
+
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // adding to local storage
+                addedCity(city);
+                // changing src attributes in the DOM
+                document.getElementById("weather-icon").setAttribute('src', urlIcon);
+
+            });
     }
-    for (let i = 0; i < localStorage.length; i++) {
-        let location = localStorage.getItem("city" + i);
-        let activeCity;
-        if (presentLocation === "") {
-            presentLocation = recentCity;
-        }
-        if (location === presentLocation) {
-            activeCity = `<button type="button" class="btn btn-secondary">${location}</button></li>`;
-        } else {
-            activeCity = `<button type="button" class="btn btn-secondary">${location}</button></li>`;
-        }
-        document.querySelector('#search-history').prepend(activeCity);
-    }
+    locationURL();
+    let liveWeatherLink =
+        fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=` + cityCode + "," + countryCode + "&limit=5&appid=0780a07cd4320778ef6285e7998f12ae")
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                displayIcon = data.current.weather[0].icon;
+                imageSource = "https://openweathermap.org/img/wn/" + displayIcon + ".png";
+                icon.attr('src', imgSrc)
+                cityTitle.text(cityCode);
+
+                let date = new Date(data.current.dt * 1000);
+                dateTime.text("(" + (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear() + ")");
+
+                temperature.text("temperature: " + data.current.temperature + "fahreinheight");
+                humidity.text("Humidity: " + data.current.humidity + " %");
+                wind.text("Wind Speed: " + data.current.wind_speed + " mph");
+
+                for (let i = 1; i < 6; i++) {
+
+                    let weatherCard = $("<div>")
+                    this["forecastDate" + i] = $("<h>")
+                    this["forecastIcon" + i] = $("<img>")
+                    this["forecastTemp" + i] = $("<div>")
+                    this["forecastWind" + i] = $("<div>")
+                    this["forecastHumidity" + i] = $("<div>")
+
+                    this["forecastDay" + i] = new Date(data.daily[i].dt * 1000);
+
+                    (this["forecastDate" + i]).text(((this["forecastDay" + i]).getMonth() + 1) + "/" + (this["forecastDay" + i]).getDate() + "/" + (this["forecastDay" + i]).getFullYear());
+                    (this["forecastTemp" + i]).text("Temperature: " + data.daily[i].temp.day + " F");
+                    (this["forecastWind" + i]).text("Wind: " + data.daily[i].wind_speed + " MPH");
+                    (this["forecastHumidity" + i]).text("Humidity: " + data.daily[i].humidity + " %");
+                    (this["weatherIcon" + i]) = data.daily[i].weather[0].icon;
+
+                    DateimageSource = "https://openweathermap.org/img/wn/" + (this["displayIcon" + i]) + ".png";
+                    (this["forecastIcon" + i]).attr('src', DateimageSource)
+
+                    $(".five-day").append(weatherCard)
+                    weatherCard.append((this["forecastDate" + i]));
+                    weatherCard.append((this["forecastIcon" + i]));
+                    weatherCard.append((this["forecastTemp" + i]));
+                    weatherCard.append((this["forecastWind" + i]));
+                    weatherCard.append((this["forecastHumidity" + i]));
+                    weatherCard.addClass("weather-card")
+                }
+            }
+            )
+
 }
 
 let forecast5 = (event) => {
@@ -165,50 +203,16 @@ let forecast5 = (event) => {
     forecast5(event);
 };
 
+//Event listeners for search button
+document.getElementById("searchButton").addEventListener("click", appendCity);
+document.getElementById("searchButton").addEventListener('click', locationURL);
 
-HTMLforecast5 = `<h1>Five Day Weather Forecast</h1>
-<section class="d-inline-flex flex-wrap" id="forecast5Cards">
-`
-for (let i = 0; i < localStorage.length; i++) {
-    let days = list[i].weather.dt;
-    let time = days.dt;
-    let timeDifference = response.location.timezone;
-    let hourDifference = timeDifference / 60 / 60;
-    rightNow = moment.unix(time).utc().utcOffset(hourDifference);
-    // formula to get icon
-    codeIcon = list.weather[0].icon;
-    // concatenate the variable with the url
-    displayIcon = "https://openweathermap.org/img/w/" + city.weather[0].icon + ".png";
-
-    if (rightNow.format("HH:mm:ss") === "11:00:00" || rightNow.format("HH:mm:ss") === "12:00:00" || rightNow.format("HH:mm:ss") === "13:00:00") {
-        HTMLforecast5 += `
-            <div class="weather-card card m-2 p0">
-                <ul class="list-unstyled p-3">
-                    <li>${rightNow.format("MM/DD/YYYY")}</li>
-                    <li class="weather-icon"><img src="${urlIcon}"></li>
-                    <li>Temp: ${days.main.temp}&#8457;</li>
-                    <br>
-                    <li>Humidity: ${days.main.humidity}%</li>
-                </ul>
-            </div>`;
-    }
-}
-HTMLforecast5 += `</div>`;
-
-
-//Event listener for search button
-document.getElementById("search-button").addEventListener("click", (event) => {
-    event.preventDefault();
-    presentLocation = document.getElementById("search-input").value;
-    weatherNow(event);
-});
 //Event listener for recent city search buttons
-document.getElementById("search-history").addEventListener("click", (event) => {
+document.getElementById(".history").addEventListener("click", (event) => {
     event.preventDefault();
-    document.getElementById("search-input").val(event.target.textContent);
-    presentLocation = document.getElementById("search-input").value;
-    weatherNow(event);
-}
-);
+    $(".subtitle").attr("style", "display:inline")
+    document.getElementById("searchInput").value = event.target.id;
+    locationURL();
+});
 
 displaySearches();
