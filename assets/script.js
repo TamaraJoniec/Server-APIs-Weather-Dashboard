@@ -127,10 +127,11 @@ function weatherNow() {
                 document.getElementById("weather-icon").setAttribute('src', urlIcon);
 
             });
-    }
+    
     locationURL();
-    let liveWeatherLink =
-        fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=` + cityCode + "," + countryCode + "&limit=5&appid=0780a07cd4320778ef6285e7998f12ae")
+
+    let liveWeatherLink =`https://api.openweathermap.org/data/2.5/forecast?lat=` + cityCode + "," + countryCode + "&limit=5&appid=0780a07cd4320778ef6285e7998f12ae"
+        fetch(liveWeatherLink)
             .then(function (response) {
                 return response.json();
             })
@@ -202,7 +203,7 @@ let forecast5 = (event) => {
         })
     forecast5(event);
 };
-
+}
 //Event listeners for search button
 document.getElementById("searchButton").addEventListener("click", appendCity);
 document.getElementById("searchButton").addEventListener('click', locationURL);
