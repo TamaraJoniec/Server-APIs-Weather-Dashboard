@@ -76,17 +76,14 @@ function displayData() {
 
 displayData();
 
-
 function weatherNow() {
 
-    $(".five-day").empty();
+    $(".fiveDay").empty();
     $(".city").empty()
 
     myCitySearch = document.getElementById("searchInput").value;
     let cityCode = myCitySearch;
 
-    let cityLon;
-    let cityLat;
     let cityTitle = $("<h>")
     cityTitle.addClass("h3")
     let temperature = $("<div>")
@@ -96,16 +93,16 @@ function weatherNow() {
     icon.addClass("icon");
     let dateTime = $("<div>")
 
-    document.getElementByClassName("city").classList.add("list-group")
+    document.getElementByClassName("city").classList.add("list-cities")
     document.getElementByClassName("city").append(cityTitle)
     document.getElementByClassName("city").append(dateTime)
     document.getElementByClassName("city").append(icon)
     document.getElementByClassName("city").append(temperature)
     document.getElementByClassName("city").append(wind)
     document.getElementByClassName("city").append(humidity)
+}
 
-
-    function locationURL() {
+function locationURL() {
         // get location from search
         // fetch weather data
         fetch("https://api.openweathermap.org/geo/1.0/direct?q=Leeds&limit=5&appid=0780a07cd4320778ef6285e7998f12ae")
@@ -168,13 +165,13 @@ function weatherNow() {
                     DateimageSource = "https://openweathermap.org/img/wn/" + (this["displayIcon" + i]) + ".png";
                     (this["forecastIcon" + i]).attr('src', DateimageSource)
 
-                    $(".five-day").append(weatherCard)
+                    $(".fiveDay").append(weatherCard)
                     weatherCard.append((this["forecastDate" + i]));
                     weatherCard.append((this["forecastIcon" + i]));
                     weatherCard.append((this["forecastTemp" + i]));
                     weatherCard.append((this["forecastWind" + i]));
                     weatherCard.append((this["forecastHumidity" + i]));
-                    weatherCard.addClass("weather-card")
+                    weatherCard.addClass("weatherCard")
                 }
             }
             )
@@ -203,7 +200,7 @@ let forecast5 = (event) => {
         })
     forecast5(event);
 };
-}
+
 //Event listeners for search button
 document.getElementById("searchButton").addEventListener("click", appendCity);
 document.getElementById("searchButton").addEventListener('click', locationURL);
