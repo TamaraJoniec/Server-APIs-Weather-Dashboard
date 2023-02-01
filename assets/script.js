@@ -87,7 +87,7 @@ function locationURL() {
     // get location from search
     // fetch weather data
     console.log("locationURL");
-    fetch("https://api.openweathermap.org/geo/1.0/direct?q=Leeds&limit=5&appid=0780a07cd4320778ef6285e7998f12ae")
+    fetch("https://api.openweathermap.org/geo/1.0/direct?q=Leeds&limit=5&appid=bd4f86e586f7c181c1e585358d3c507c")
         .then(response => response.json())
         .then(citySearch => {
             console.log("myCitySearch = ", citySearch);
@@ -95,7 +95,6 @@ function locationURL() {
             console.log(city.lat);
             console.log(city.lon);
             appendCity();
-           // return fetch('https://api.openweathermap.org/geo/1.0/direct?q=' + cityCode + "," + countryCode + "&limit=5&appid=0780a07cd4320778ef6285e7998f12ae");
 
         })
         .then(response => response.json())
@@ -109,7 +108,8 @@ function locationURL() {
         });
 
     // locationURL();
-    let liveWeatherLink = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=0780a07cd4320778ef6285e7998f12ae`
+    let liveWeatherLink = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=bd4f86e586f7c181c1e585358d3c507c
+    `
     fetch(liveWeatherLink)
         .then(function (response) {
             return response.json();
@@ -162,14 +162,14 @@ function locationURL() {
 
 let forecast5 = (event) => {
     // fetch weather data
-    fetch("https://api.openweathermap.org/geo/1.0/direct?q=Leeds&limit=5&appid=0780a07cd4320778ef6285e7998f12ae")
+    fetch("https://api.openweathermap.org/geo/1.0/direct?q=Leeds&limit=5&appid=bd4f86e586f7c181c1e585358d3c507c")
         .then(response => response.json())
         .then(citySearch => {
             let city = citySearch[0]
             console.log(city.lat);
             console.log(city.lon);
 
-            return fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=0780a07cd4320778ef6285e7998f12ae`)
+            return fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=bd4f86e586f7c181c1e585358d3c507c`)
 
         })
         .then(response => response.json())
