@@ -4,7 +4,7 @@
     --aqua: #04BF9D;
     ---yellow: #F2CB05;
     --orange: #F29F05;
-    --gray: #58748C;
+    --gray: hsl(208, 23%, 45%);
 }
 
 body {
@@ -23,9 +23,9 @@ body {
 }
 
 h1,
-h2 {
+h2,
+.subheading {
     font-weight: 700;
-    margin: 0;
     color: var(--gray);
     line-height: 1.25;
 }
@@ -51,7 +51,8 @@ h2 {
 
 
 #search-button {
-    color: var(--aqua)
+    color: var(--aqua);
+    width: auto;
 }
 
 #search-button:hover {
@@ -91,4 +92,11 @@ h2 {
 
 .button-inline {
     display: inline;
+}
+
+.bg-light {
+    width: auto;
+}
+.float-left {
+    float: left!important;
 }

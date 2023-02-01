@@ -1,16 +1,17 @@
 function appendCity() {
 
-    myCitySearch = document.getElementById("searchInput").value;
+    myCitySearch = document.getElementById("search-input").value;
+    console.log(`'myCitySearch= `, myCitySearch);
     searchRecord = findData();
     let cityFind = $("<div>")
     cityFind.attr('id', myCitySearch)
     cityFind.text(myCitySearch)
-    cityFind.addClass("h4")
+    cityFind.addClass("h5")
 
     if (searchRecord.includes(myCitySearch) === false) {
         $(".history").append(cityFind)
     }
-    $(".subtitle").attr("style", "display:inline")
+    $(".subheading").attr("style", "display:inline")
     cityLocalStorage(myCitySearch);
 
 
@@ -80,18 +81,21 @@ function weatherNow() {
     document.getElementByClassName("city").append(wind)
     document.getElementByClassName("city").append(humidity)
 }
-
+let lat = 0;
+let lon = 0;
 function locationURL() {
     // get location from search
     // fetch weather data
+    console.log("locationURL");
     fetch("https://api.openweathermap.org/geo/1.0/direct?q=Leeds&limit=5&appid=0780a07cd4320778ef6285e7998f12ae")
         .then(response => response.json())
         .then(citySearch => {
+            console.log("myCitySearch = ", citySearch);
             let city = citySearch[0];
             console.log(city.lat);
             console.log(city.lon);
-
-            return fetch('https://api.openweathermap.org/geo/1.0/direct?q=' + cityCode + "," + countryCode + "&limit=5&appid=0780a07cd4320778ef6285e7998f12ae");
+            appendCity();
+           // return fetch('https://api.openweathermap.org/geo/1.0/direct?q=' + cityCode + "," + countryCode + "&limit=5&appid=0780a07cd4320778ef6285e7998f12ae");
 
         })
         .then(response => response.json())
@@ -104,9 +108,8 @@ function locationURL() {
 
         });
 
-    locationURL();
-
-    let liveWeatherLink = `https://api.openweathermap.org/data/2.5/forecast?lat=` + cityCode + "," + countryCode + "&limit=5&appid=0780a07cd4320778ef6285e7998f12ae"
+    // locationURL();
+    let liveWeatherLink = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=0780a07cd4320778ef6285e7998f12ae`
     fetch(liveWeatherLink)
         .then(function (response) {
             return response.json();
@@ -166,7 +169,7 @@ let forecast5 = (event) => {
             console.log(city.lat);
             console.log(city.lon);
 
-            return fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&appid=0780a07cd4320778ef6285e7998f12ae`)
+            return fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=0780a07cd4320778ef6285e7998f12ae`)
 
         })
         .then(response => response.json())
@@ -181,15 +184,15 @@ let forecast5 = (event) => {
 };
 
 //Event listeners for search button
-document.getElementById("searchButton").addEventListener("click", appendCity);
-document.getElementById("searchButton").addEventListener('click', locationURL);
+// document.getElementById("search-button").addEventListener('click', appendCity);
+document.getElementById("search-button").addEventListener('click', locationURL);
 
 //Event listener for recent city search buttons
-document.getElementById(".history").addEventListener("click", (event) => {
+document.querySelector(".history").addEventListener("click", (event) => {
     event.preventDefault();
     $(".subtitle").attr("style", "display:inline")
-    document.getElementById("searchInput").value = event.target.id;
+   // document.getElementById("search-input").value = event.target.id;
     locationURL();
 });
 
-displaySearches();
+
