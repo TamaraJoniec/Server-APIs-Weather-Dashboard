@@ -1,15 +1,20 @@
 let lat = 0;
 let lon = 0;
 let dt = 0;
+let myCitySearch = document.getElementById("search-input").value;
+let temperature;
+let cityCode = myCitySearch;
+
 let liveWeatherLink = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=bd4f86e586f7c181c1e585358d3c507c`
 // let date = new Date(current.dt * 1000);
+let date = moment().format("ddd D MMM YYYY");
+$("#liveWeather").text(date);
 let cityTitle = $("<h>");
 let icon = $("<img>");
 
 function addedCity(city) {
 
-    // let myCitySearch = document.getElementById("search-input").value;
-    // console.log(`'myCitySearch= `, myCitySearch);
+    console.log(`'myCitySearch= `, myCitySearch);
     searchRecord = findData();
     let cityFind = $("<div>")
     cityFind.attr('id', city.name)
@@ -62,7 +67,6 @@ function displayData() {
 
 // displayData();
 
-// let cityCode = myCitySearch;
 
 function weatherNow(city) {
 
@@ -70,7 +74,7 @@ function weatherNow(city) {
     $(".city").empty()
 
     cityTitle.addClass("h3")
-    let temperature = $("<div>")
+    temperature = $("<div>")
     let wind = $("<div>")
     let humidity = $("<div>")
     icon.addClass("icon");
@@ -113,9 +117,9 @@ function locationURL() {
             document.querySelector("#imageWeather").setAttribute('src', imageSource)
             cityTitle.text(cityCode);
 
-            dateTime.text("(" + (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear() + ")");
+            // dateTime.text("(" + (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear() + ")");
 
-            temperature.text("temperature: " + data.current.temperature + "fahreinheight");
+            temperature.text("temperature: " + data.current.temp + "fahreinheight");
             humidity.text("Humidity: " + data.current.humidity + " %");
             wind.text("Wind Speed: " + data.current.wind_speed + " mph");
 
