@@ -4,10 +4,8 @@ let dt = 0;
 let temp;
 let name;
 let wind;
-let myCitySearch = document.querySelector("#search-input").textContent;
 let temperature;
 let humidity;
-let cityCode = myCitySearch;
 let displayIcon;
 let cityFind = 0;
 let imageSource;
@@ -17,26 +15,24 @@ $("#liveWeather").text(date);
 let cityTitle;
 let icon;
 let dateTime;
+let myCitySearch = document.querySelector("#search-input").value;
 
 function locationURL() {
     // get location from search
-    // fetch weather data
-    // console.log("locationURL");
-    fetch(`https://api.openweathermap.org/geo/1.0/direct?q=London&limit=5&appid=bd4f86e586f7c181c1e585358d3c507c
+    let initialSearch = document.querySelector("#search-input").value;
+
+    console.log(initialSearch)
+    fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${initialSearch.toLowerCase()}&limit=5&appid=bd4f86e586f7c181c1e585358d3c507c
     `)
         .then(response => response.json())
         .then(citySearch => {
-            let city = citySearch[0];
+            let city = citySearch[0];            
+            console.log(citySearch)
+
             weatherInfo(city);
-            // console.log(city.lat);
-            // console.log(city.lon);
-            // appendCity();
-            // adding to local storage
             addedCity(city);
             // changing src attributes in the DOM
-            $("#icon").attr('src', icon);
             weatherNow(city)
-            // return fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&appid=0780a07cd4320778ef6285e7998f12ae`)
         })
 }
 function weatherInfo(city) {
@@ -49,33 +45,33 @@ function weatherInfo(city) {
         .then(function (data) {
             displayIcon = data.list[0].weather[0].icon;
             imageSource = "https://openweathermap.org/img/wn/" + displayIcon + ".png";
-            document.querySelector("#imageWeather").setAttribute('src', imageSource)
-            cityTitle.text(cityCode);
-
-            // dateTime.text("(" + (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear() + ")");
-
-            temperature.text("temperature: " + data.list[0].main.temp + "fahreinheight");
+            icon.attr('src', imageSource)
+            console.log(city)
+            cityTitle.text(city.name);
+            temperature.text("Temperature: " + data.list[0].main.temp + "fahreinheight");
             humidity.text("Humidity: " + data.list[0].main.humidity + " %");
             wind.text("Wind Speed: " + data.list[0].wind.speed + " mph");
 
             for (let i = 1; i < 6; i++) {
                 // creating for loop to make weather cards as and when user searches a city
                 let weatherCard = $("<div>")
-                this["forecastDate" + i] = $("<h>")
+                this["forecastDate" + i] = $("<h2>")
                 this["forecastIcon" + i] = $("<img>")
                 this["forecastTemp" + i] = $("<div>")
                 this["forecastWind" + i] = $("<div>")
                 this["forecastHumidity" + i] = $("<div>")
 
-                this["forecastDay" + i] = new Date(data.dt * 1000);
+                this["forecastDay" + i] = new Date(data.list[i].dt * 1000);
+                (this["forecastDate" + i]).text(this["forecastDay" + i]);
 
-                (this["forecastDate" + i]).text(((this["forecastDay" + i]).getMonth() + 1) + "/" + (this["forecastDay" + i]).getDate() + "/" + (this["forecastDay" + i]).getFullYear());
-                (this["forecastTemp" + i]).text("Temperature: " + data.list[0].main.temp + " F");
-                (this["forecastWind" + i]).text("Wind: " + data.list[0].wind.speed + " MPH");
-                (this["forecastHumidity" + i]).text("Humidity: " + data.list[0].humidity + " %");
-                (this["weatherIcon" + i]) = data.list[0].weather[0].icon;
-
-                let DateimageSource = "https://openweathermap.org/img/wn/" + (this["displayIcon" + i]) + ".png";
+                // (this["forecastDate" + i]).text(((this["forecastDay" + i]).getMonth() + 1) + "/" + (this["forecastDay" + i]).getDate() + "/" + (this["forecastDay" + i]).getFullYear());
+                (this["forecastTemp" + i]).text("Temperature: " + data.list[i].main.temp + " F");
+                (this["forecastWind" + i]).text("Wind: " + data.list[i].wind.speed + " MPH");
+                (this["forecastHumidity" + i]).text("Humidity: " + data.list[i].main.humidity + " %");
+                (this["weatherIcon" + i]) = data.list[i].weather[0].icon;
+                console.log(data);
+                console.log(window.forecastIcon1)
+                let DateimageSource = "https://openweathermap.org/img/wn/" + (this["weatherIcon" + i]) + ".png";
                 (this["forecastIcon" + i]).attr('src', DateimageSource)
 
                 $(".fiveDay").append(weatherCard)
@@ -99,10 +95,10 @@ function addedCity(city) {
     cityFind.addClass("h5")
 
     if (searchRecord.includes(city.name) === false) {
-        $(".history").append(cityFind)
+        $(".list-cities").append(cityFind)
     }
     $(".subheading").attr("style", "display:inline")
-    cityLocalStorage(city.name);
+    cityLocalStorage(city);
 };
 
 function findData() {
