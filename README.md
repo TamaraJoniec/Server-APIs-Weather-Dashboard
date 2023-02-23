@@ -36,13 +36,17 @@ The following image shows the web application's appearance and functionality:
 ![The weather app includes a search option, a list of cities, and a five-day forecast and current weather conditions for London.](./assets/10-server-side-apis-challenge-demo.png)
 
 * The URL of the functional, deployed application: 
+https://tamarajoniec.github.io/Server-APIs-Weather-Dashboard/
 
 ## Licence
 
 * MIT Licence
-
+ 
 ## Credits
+Thank you for your help with this project!
 
+Alexis San Javier (Tutor)
+Martin Williams (TA)
 Dane Edwards: Thank you for the guidance and code snippets.
 
 ## References

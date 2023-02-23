@@ -40,16 +40,15 @@ h2,
 
 }
 
-.list-item:hover {
-    background-color: var(---yellow);
-}
 
 .icon {
     width: 10%;
     height: 10%;
 }
 
-
+#search-history {
+    color: white;
+}
 #search-button {
     color: var(--aqua);
     width: auto;
@@ -72,6 +71,7 @@ h2,
 .fiveDay {
     display: flex;
 }
+
 
 .button {
 

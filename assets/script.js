@@ -3,18 +3,18 @@ let lon = 0;
 let dt = 0;
 let temp;
 let name;
-let wind;
-let temperature;
-let humidity;
 let displayIcon;
 let cityFind = 0;
 let imageSource;
-// let date = new Date(current.dt * 1000);
+let newList;
+let currentList;
 let date = moment().format("ddd D MMM YYYY");
 $("#liveWeather").text(date);
-let cityTitle;
-let icon;
-let dateTime;
+let cityTitle = $("#city-title");
+let icon = $("#weather-icon");
+let temperature = $("#temperature");
+let humidity = $("#humidity");
+let wind = $("#wind");
 let myCitySearch = document.querySelector("#search-input").value;
 
 function locationURL() {
@@ -26,7 +26,7 @@ function locationURL() {
     `)
         .then(response => response.json())
         .then(citySearch => {
-            let city = citySearch[0];            
+            let city = citySearch[0];
             console.log(citySearch)
 
             weatherInfo(city);
@@ -46,7 +46,6 @@ function weatherInfo(city) {
             displayIcon = data.list[0].weather[0].icon;
             imageSource = "https://openweathermap.org/img/wn/" + displayIcon + ".png";
             icon.attr('src', imageSource)
-            console.log(city)
             cityTitle.text(city.name);
             temperature.text("Temperature: " + data.list[0].main.temp + "fahreinheight");
             humidity.text("Humidity: " + data.list[0].main.humidity + " %");
@@ -55,7 +54,7 @@ function weatherInfo(city) {
             for (let i = 1; i < 6; i++) {
                 // creating for loop to make weather cards as and when user searches a city
                 let weatherCard = $("<div>")
-                this["forecastDate" + i] = $("<h2>")
+                this["forecastDate" + i] = $("<h4>")
                 this["forecastIcon" + i] = $("<img>")
                 this["forecastTemp" + i] = $("<div>")
                 this["forecastWind" + i] = $("<div>")
@@ -87,14 +86,13 @@ function weatherInfo(city) {
 }
 
 function addedCity(city) {
-
-    searchRecord = findData();
+    newList = findData();
     cityFind = $("<div>")
     cityFind.attr('id', city.name)
     cityFind.text(city.name)
     cityFind.addClass("h5")
 
-    if (searchRecord.includes(city.name) === false) {
+    if (newList.includes(city.name) === false) {
         $(".list-cities").append(cityFind)
     }
     $(".subheading").attr("style", "display:inline")
@@ -102,10 +100,10 @@ function addedCity(city) {
 };
 
 function findData() {
-    let currentList = localStorage.getItem("city");
+    currentList = localStorage.getItem("city");
     if (currentList !== null) {
         newList = JSON.parse(currentList);
-        return newList;
+
     } else {
         newList = [];
     }
@@ -115,7 +113,7 @@ function findData() {
 function cityLocalStorage(city) {
     let addedList = findData();
 
-    if (searchRecord.includes(city) === false) {
+    if (addedList.includes(city) === false) {
         addedList.push(city);
     }
     localStorage.setItem("city", JSON.stringify(addedList));
@@ -130,13 +128,11 @@ function displayData() {
         myCitySearch = searchRecord[i]
         myCitySearch.attr('id', city.name)
         myCitySearch.text(city.name)
-        cityFind.addClass("h4")
-        $(".history").append(cityFind)
+        myCitySearch.addClass("h4")
+        $(".list-cities").append(cityFind)
     }
     displayData(cityFind);
 };
-
-
 
 function weatherNow(city) {
     $(".fiveDay").empty();
@@ -165,7 +161,6 @@ document.getElementById("search-button").addEventListener('click', locationURL);
 //Event listener for recent city search buttons
 document.querySelector(".history").addEventListener("click", (event) => {
     event.preventDefault();
-    document.querySelector(".subtitle").setAttribute("style", "display:inline")
-    // document.getElementById("search-input").value = event.target.id;
+    document.querySelector(".subheading").setAttribute("style", "display:inline")
     locationURL();
 });
