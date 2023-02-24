@@ -30,78 +30,83 @@ function locationURL() {
             weatherNow(city);
         });
 };
+
 function weatherNow(city) {
     // API endpoint for current weather data
     const currentWeatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
-
+  
     fetch(currentWeatherURL)
-        .then((response) => response.json())
-        .then((data) => {
-            // Code to display today's weather
-            const todayWeather = document.querySelector("#today-weather");
-
-            // Clearing existing content
-            todayWeather.innerHTML = "";
-
-            // Creating and append elements
-            weatherCard = `<div class="weather-card-today ${isToday ? "today" : ""}"></div>`;
-            const todayCityName = document.createElement("h2");
-            todayCityName.textContent = data.name;
-            todayWeather.appendChild(todayCityName);
-
-            const todayDate = document.createElement("h3");
-            todayDate.textContent = new Date().toLocaleDateString();
-            todayWeather.appendChild(todayDate);
-
-            const todayWeatherInfo = document.createElement("div");
-            todayWeatherInfo.classList.add("today-weather-info");
-            todayWeather.appendChild(todayWeatherInfo);
-
-            const todayTemp = document.createElement("p");
-            todayTemp.innerHTML = `Temperature: ${Math.round(
-                data.main.temp
-            )}&deg;C`;
-            todayWeatherInfo.appendChild(todayTemp);
-
-            const todayHumidity = document.createElement("p");
-            todayHumidity.textContent = `Humidity: ${data.main.humidity}%`;
-            todayWeatherInfo.appendChild(todayHumidity);
-
-            const todayWind = document.createElement("p");
-            todayWind.innerHTML = `Wind Speed: ${Math.round(
-                data.wind.speed
-            )} km/h`;
-
-            // get today's weather data
-            todayWeather = weatherData[0];
-
-            // get the HTML elements of the hero banner
-            let banner = document.getElementById('hero-banner');
-            let bannerIcon = banner.querySelector('.banner-icon');
-            let bannerTemp = banner.querySelector('.banner-temp');
-            let bannerHumidity = banner.querySelector('.banner-humidity');
-            let bannerWind = banner.querySelector('.banner-wind');
-            let bannerUVIndex = banner.querySelector('.banner-uvindex');
-
-            // update the HTML of the hero banner with today's weather data
-            bannerIcon.setAttribute('src', getIconUrl(todayWeather.weather[0].icon));
-            bannerTemp.textContent = todayWeather.temp.day.toFixed(1) + ' °C';
-            bannerHumidity.textContent = todayWeather.humidity + '%';
-            bannerWind.textContent = todayWeather.wind_speed + ' m/s';
-            bannerUVIndex.textContent = todayWeather.uvi;
-
-            // make the hero banner visible
-            banner.style.display = 'block';
-            todayWeatherInfo.appendChild(todayWind);
-
-            // Setting the font size and weight of today's weather to be bigger and bolder
-            todayCityName.style.fontSize = "5rem";
-            todayCityName.style.fontWeight = "bold";
-            todayDate.style.fontSize = "2rem";
-            todayDate.style.fontWeight = "bold";
-            todayWeatherInfo.style.fontSize = "2rem";
-        });
-}
+      .then((response) => response.json())
+      .then((data) => {
+        // Code to display today's weather
+        const todayWeather = document.querySelector("#today-weather");
+  
+        // Clearing existing content
+        todayWeather.innerHTML = "";
+  
+        // Creating and append elements
+        const todayCityName = document.createElement("h2");
+        todayCityName.textContent = data.name;
+        todayWeather.appendChild(todayCityName);
+  
+        const todayDate = document.createElement("h3");
+        todayDate.textContent = new Date().toLocaleDateString();
+        todayWeather.appendChild(todayDate);
+  
+        const todayWeatherInfo = document.createElement("div");
+        todayWeatherInfo.classList.add("today-weather-info");
+        todayWeather.appendChild(todayWeatherInfo);
+  
+        const todayTemp = document.createElement("p");
+        todayTemp.innerHTML = `Temperature: ${Math.round(
+          data.main.temp
+        )}&deg;C`;
+        todayWeatherInfo.appendChild(todayTemp);
+  
+        const todayHumidity = document.createElement("p");
+        todayHumidity.textContent = `Humidity: ${data.main.humidity}%`;
+        todayWeatherInfo.appendChild(todayHumidity);
+  
+        const todayWind = document.createElement("p");
+        todayWind.innerHTML = `Wind Speed: ${Math.round(
+          data.wind.speed
+        )} km/h`;
+        todayWeatherInfo.appendChild(todayWind);
+  
+        // get today's weather data
+        const todayWeatherData = weatherData[0];
+  
+        // get the HTML elements of the hero banner
+        const banner = document.getElementById("hero-banner");
+        const bannerIcon = banner.querySelector(".banner-icon");
+        const bannerTemp = banner.querySelector(".banner-temp");
+        const bannerHumidity = banner.querySelector(".banner-humidity");
+        const bannerWind = banner.querySelector(".banner-wind");
+        const bannerUVIndex = banner.querySelector(".banner-uvindex");
+  
+        // update the HTML of the hero banner with today's weather data
+        bannerIcon.setAttribute(
+          "src",
+          `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`
+        );
+        bannerTemp.textContent = `${Math.round(data.main.temp)} °C`;
+        bannerHumidity.textContent = `${data.main.humidity}%`;
+        bannerWind.textContent = `${Math.round(data.wind.speed)} m/s`;
+        bannerUVIndex.textContent = todayWeatherData.uvi;
+  
+        // make the hero banner visible
+        banner.style.display = "block";
+  
+        // Setting the font size and weight of today's weather to be bigger and bolder
+        todayCityName.style.fontSize = "5rem";
+        todayCityName.style.fontWeight = "bold";
+        todayDate.style.fontSize = "2rem";
+        todayDate.style.fontWeight = "bold";
+        todayWeatherInfo.style.fontSize = "2rem";
+      });
+  }
+  
+  
 
 function weatherInfo(city) {
     const forecastContainer = document.getElementById("forecast-container");
@@ -143,10 +148,12 @@ function weatherInfo(city) {
                 forecastContainer.appendChild(weatherCard);
 
             };
+            const heroBanner = document.getElementById("hero-banner");
+            heroBanner.style.backgroundImage = `url("https://source.unsplash.com/1600x900/?${city.name}")`;
+            heroBanner.style.display = "block";
 
         });
-}
-
+};
 
 function addedCity(city) {
     newList = findData();
@@ -204,6 +211,8 @@ function displayData() {
         weatherInfo(city);
     });
     historyList.appendChild(historyItem);
+
+
 };
 
 

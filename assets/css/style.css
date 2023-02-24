@@ -46,6 +46,68 @@ h5 {
     text-decoration: none;
 
 }
+.search-history-btn {
+    display: inline-block;
+    background-color: #ddd;
+    color: #333;
+    border: none;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .search-history-btn:hover {
+    background-color: #aaa;
+    color: #fff;
+  }
+  
+
+  .hero {
+    display: none;
+    width: 100%;
+    height: 300px;
+    background-color: #d9e3f0;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero--show {
+    display: block;
+}
+
+.hero__icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 150px;
+}
+
+.hero__weather {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+}
+
+.hero__temp {
+    font-size: 3em;
+    font-weight: bold;
+}
+
+.hero__desc {
+    font-size: 1.5em;
+    font-style: italic;
+}
+
+  
 /* Style for the card container */
 .card-container {
     display: flex;
@@ -177,22 +239,3 @@ button .subheading {
     display: inline;
 }
 
-.search-history-btn {
-    display: inline-block;
-    background-color: #ddd;
-    color: #333;
-    border: none;
-    padding: 10px;
-    margin: 5px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-  }
-  
-  .search-history-btn:hover {
-    background-color: #aaa;
-    color: #fff;
-  }
-  
