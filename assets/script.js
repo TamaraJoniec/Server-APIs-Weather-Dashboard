@@ -141,9 +141,9 @@ function weatherInfo(city) {
                 weatherCard.appendChild(forecastHumidity);
 
                 forecastContainer.appendChild(weatherCard);
-        
+
             };
-            
+
         });
 }
 
@@ -195,7 +195,17 @@ function displayData() {
         myCitySearch.classList.add("h4");
         listCities.append(myCitySearch);
     }
+
+    const historyList = document.getElementById("history-list");
+    const historyItem = document.createElement("button");
+    historyItem.classList.add("history-item");
+    historyItem.textContent = city.name;
+    historyItem.addEventListener("click", function () {
+        weatherInfo(city);
+    });
+    historyList.appendChild(historyItem);
 };
+
 
 //Event listeners for search button
 // document.getElementById("search-button").addEventListener('click', appendCity);
