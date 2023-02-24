@@ -73,30 +73,26 @@ function weatherNow(city) {
         )} km/h`;
         todayWeatherInfo.appendChild(todayWind);
   
+        // get today's weather data
+        const todayWeatherData = data.weather[0];
+  
         // get the HTML elements of the hero banner
-        const banner = document.getElementById("hero-banner");
-        const bannerIcon = banner.querySelector(".banner-icon");
-        const bannerTemp = banner.querySelector(".banner-temp");
-        const bannerHumidity = banner.querySelector(".banner-humidity");
-        const bannerWind = banner.querySelector(".banner-wind");
-        const bannerUVIndex = banner.querySelector(".banner-uvindex");
+        const banner = document.getElementById('hero-banner');
+        const bannerIcon = banner.querySelector('.banner-icon');
+        const bannerTemp = banner.querySelector('.banner-temp');
+        const bannerHumidity = banner.querySelector('.banner-humidity');
+        const bannerWind = banner.querySelector('.banner-wind');
+        const bannerUVIndex = banner.querySelector('.banner-uvindex');
   
         // update the HTML of the hero banner with today's weather data
-        bannerIcon.setAttribute(
-          "src",
-          `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`
-        );
-        bannerTemp.textContent = `Temperature: ${Math.round(
-          data.main.temp
-        )}&deg;C`;
+        bannerIcon.setAttribute('src', `https://openweathermap.org/img/wn/${todayWeatherData.icon}.png`);
+        bannerTemp.textContent = `Temperature: ${Math.round(data.main.temp)}&deg;C`;
         bannerHumidity.textContent = `Humidity: ${data.main.humidity}%`;
-        bannerWind.innerHTML = `Wind Speed: ${Math.round(
-          data.wind.speed
-        )} km/h`;
-        bannerUVIndex.textContent = "";
+        bannerWind.textContent = `Wind Speed: ${Math.round(data.wind.speed)} km/h`;
+        bannerUVIndex.textContent = "UV Index: Not Available";
   
         // make the hero banner visible
-        banner.style.display = "block";
+        banner.style.display = 'block';
   
         // Setting the font size and weight of today's weather to be bigger and bolder
         todayCityName.style.fontSize = "5rem";
