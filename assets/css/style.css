@@ -29,6 +29,7 @@ h4,
 h5 {
     color: white;
 }
+
 .subheading {
     font-weight: 700;
     color: var(--gray);
@@ -53,6 +54,7 @@ h5 {
 button .subheading {
     color: white;
 }
+
 #search-button {
     color: var(--aqua);
     width: auto;
@@ -60,6 +62,10 @@ button .subheading {
 
 #search-button:hover {
     color: var(--yellow);
+}
+
+.big {
+    font-size: 30px;
 }
 
 .weatherCard {
@@ -73,12 +79,16 @@ button .subheading {
 }
 
 .today {
-    transform: scale(1.1); /* increase size by 10% */
-    z-index: 1; /* ensure it appears on top of other cards */
-  }
+    color:#D95276;
+    font-size: 1.5rem;
+    transform: scale(1.1);
+    /* increase size by 10% */
+    z-index: 1;
+    /* ensure it appears on top of other cards */
+}
 
 .forecast-today {
-    color:#D95276
+    color: #D95276
 }
 
 
@@ -106,6 +116,7 @@ button .subheading {
 .bg-light {
     width: auto;
 }
+
 .float-left {
-    float: left!important;
+    float: left !important;
 }

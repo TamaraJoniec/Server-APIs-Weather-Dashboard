@@ -35,54 +35,55 @@ function locationURL() {
 function weatherNow(city) {
     // API endpoint for current weather data
     const currentWeatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
-  
+
     fetch(currentWeatherURL)
-      .then((response) => response.json())
-      .then((data) => {
-        // Code to display today's weather
-        const todayWeather = document.querySelector("#today-weather");
-  
-        // Clearing existing content
-        todayWeather.innerHTML = "";
-  
-        // Creating and append elements
-        const todayCityName = document.createElement("h2");
-        todayCityName.textContent = data.name;
-        todayWeather.appendChild(todayCityName);
-  
-        const todayDate = document.createElement("h3");
-        todayDate.textContent = new Date().toLocaleDateString();
-        todayWeather.appendChild(todayDate);
-  
-        const todayWeatherInfo = document.createElement("div");
-        todayWeatherInfo.classList.add("today-weather-info");
-        todayWeather.appendChild(todayWeatherInfo);
-  
-        const todayTemp = document.createElement("p");
-        todayTemp.innerHTML = `Temperature: ${Math.round(
-          data.main.temp
-        )}&deg;C`;
-        todayWeatherInfo.appendChild(todayTemp);
-  
-        const todayHumidity = document.createElement("p");
-        todayHumidity.textContent = `Humidity: ${data.main.humidity}%`;
-        todayWeatherInfo.appendChild(todayHumidity);
-  
-        const todayWind = document.createElement("p");
-        todayWind.innerHTML = `Wind Speed: ${Math.round(
-          data.wind.speed
-        )} km/h`;
-        todayWeatherInfo.appendChild(todayWind);
-  
-        // Setting the font size and weight of today's weather to be bigger and bolder
-        todayCityName.style.fontSize = "3rem";
-        todayCityName.style.fontWeight = "bold";
-        todayDate.style.fontSize = "2rem";
-        todayDate.style.fontWeight = "bold";
-        todayWeatherInfo.style.fontSize = "2rem";
-      });
-  }
-  
+        .then((response) => response.json())
+        .then((data) => {
+            // Code to display today's weather
+            const todayWeather = document.querySelector("#today-weather");
+
+            // Clearing existing content
+            todayWeather.innerHTML = "";
+
+            // Creating and append elements
+            const weatherCardToday = `<div class="weather-card-today ${isToday ? "today" : ""}"></div>`;
+            const todayCityName = document.createElement("h2");
+            todayCityName.textContent = data.name;
+            todayWeather.appendChild(todayCityName);
+
+            const todayDate = document.createElement("h3");
+            todayDate.textContent = new Date().toLocaleDateString();
+            todayWeather.appendChild(todayDate);
+
+            const todayWeatherInfo = document.createElement("div");
+            todayWeatherInfo.classList.add("today-weather-info");
+            todayWeather.appendChild(todayWeatherInfo);
+
+            const todayTemp = document.createElement("p");
+            todayTemp.innerHTML = `Temperature: ${Math.round(
+                data.main.temp
+            )}&deg;C`;
+            todayWeatherInfo.appendChild(todayTemp);
+
+            const todayHumidity = document.createElement("p");
+            todayHumidity.textContent = `Humidity: ${data.main.humidity}%`;
+            todayWeatherInfo.appendChild(todayHumidity);
+
+            const todayWind = document.createElement("p");
+            todayWind.innerHTML = `Wind Speed: ${Math.round(
+                data.wind.speed
+            )} km/h`;
+            todayWeatherInfo.appendChild(todayWind);
+
+            // Setting the font size and weight of today's weather to be bigger and bolder
+            todayCityName.style.fontSize = "5rem";
+            todayCityName.style.fontWeight = "bold";
+            todayDate.style.fontSize = "2rem";
+            todayDate.style.fontWeight = "bold";
+            todayWeatherInfo.style.fontSize = "2rem";
+        });
+}
+
 
 function weatherInfo(city) {
     fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&appid=bd4f86e586f7c181c1e585358d3c507c&units=40"&cnt=40`)
@@ -139,7 +140,7 @@ function addedCity(city) {
     city
 
     function findData() {
-       let currentList = localStorage.getItem("city");
+        let currentList = localStorage.getItem("city");
         if (currentList !== null) {
             newList = JSON.parse(currentList);
         } else {
