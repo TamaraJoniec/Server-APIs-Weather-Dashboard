@@ -41,7 +41,7 @@ function weatherNow(city) {
             // Code to display today's weather
             const todayWeather = document.querySelector("#today-weather");
             const hero = document.getElementById("hero");
-            hero.classList.add("hero--show");
+            hero.classList.add("hero-banner--show");
             // Clearing existing content
             todayWeather.innerHTML = "";
 
@@ -76,12 +76,10 @@ function weatherNow(city) {
 
             // get the HTML elements of the hero banner
             const banner = document.getElementById("hero-banner").style.display = "block";
-
             const bannerIcon = banner.querySelector(".banner-icon");
             const bannerTemp = banner.querySelector(".banner-temp");
             const bannerHumidity = banner.querySelector(".banner-humidity");
             const bannerWind = banner.querySelector(".banner-wind");
-            const bannerUVIndex = banner.querySelector(".banner-uvindex");
 
             // update the HTML of the hero banner with today's weather data
             bannerIcon.setAttribute(
