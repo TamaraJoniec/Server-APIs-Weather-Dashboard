@@ -9,6 +9,8 @@
 
 body {
     background: #83a4d4;
+    background-repeat: no-repeat;
+    background-size: cover;
     /* backup for old browsers */
     background: -webkit-linear-gradient(to right, #b6fbff, #83a4d4);
     /* most browsers */
@@ -33,7 +35,6 @@ h5 {
 }
 .subheading {
     font-weight: 700;
-    color: var(--gray);
     line-height: 1.25;
 }
 
@@ -73,83 +74,12 @@ h5 {
     background-color: #aaa;
     color: #fff;
 }
-
-.hero-banner {
-  background-color: transparent;
-  border: 1px solid blue;
-}
-
-
-
-.hero-banner h1,
-.hero-banner p {
-  position: absolute;
-  color: #ffffff;
-}
-
-.hero-banner h1 {
-  top: 150px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 5rem;
-}
-
-.hero-banner p {
-  top: 250px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 2rem;
-}
-
-.icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 150px;
-    height: 150px;
-}
-
-.hero__weather {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(255, 255, 255, 0.5);
-    text-align: center;
-}
-
-.hero__temp {
-    font-size: 5rem;
-    font-weight: 600;
-    margin-bottom: 0;
-    color: var(--gray);
-}
-
-.hero__desc {
-    font-size: 2rem;
-    font-weight: 500;
-    color: var(--gray);
-    text-transform: capitalize;
-    margin-top: 0;
-}
-
   
 /* Style for the card container */
 .card-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-  }
-  
-  /* Style for the individual card */
-  .day-card {
-    width: calc(33.33% - 10px); /* the width of each card */
-    margin-bottom: 20px; /* some margin at the bottom of each card */
-    background-color: #fff; /* the background color of each card */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* a box shadow to each card */
-    border-radius: 5px; /* some border radius to each card */
-    overflow: hidden; /* Hide any overflow in each card */
   }
 
   #forecast-container {

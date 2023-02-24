@@ -33,66 +33,12 @@ function weatherNow(city) {
     fetch(currentWeatherURL)
         .then(response => response.json())
         .then(data => {
-            const todayWeather = document.querySelector("#today-weather");
-            const hero = document.getElementById("hero");
-            hero.classList.add("hero-banner--show");
-            todayWeather.innerHTML = "";
-
-            const todayCityName = document.createElement("h2");
-            todayCityName.textContent = data.name;
-            todayWeather.appendChild(todayCityName);
-
-            const todayDate = document.createElement("h3");
-            todayDate.textContent = new Date().toLocaleDateString();
-            todayWeather.appendChild(todayDate);
-
-            const todayWeatherInfo = document.createElement("div");
-            todayWeatherInfo.classList.add("today-weather-info");
-            todayWeather.appendChild(todayWeatherInfo);
-
-            const todayTemp = document.createElement("p");
-            todayTemp.innerHTML = `Temperature: ${Math.round(
-                data.main.temp
-            )}&deg;C`;
-            todayWeatherInfo.appendChild(todayTemp);
-
-            const todayHumidity = document.createElement("p");
-            todayHumidity.textContent = `Humidity: ${data.main.humidity}%`;
-            todayWeatherInfo.appendChild(todayHumidity);
-
-            const todayWind = document.createElement("p");
-            todayWind.innerHTML = `Wind Speed: ${Math.round(
-                data.wind.speed
-            )} km/h`;
-            todayWeatherInfo.appendChild(todayWind);
-
-            const banner = document.getElementById("hero-banner");
-            const bannerIcon = banner.querySelector(".icon");
-            const bannerTemp = banner.querySelector(".banner-temp");
-            const bannerHumidity = banner.querySelector(".banner-humidity");
-            const bannerWind = banner.querySelector(".banner-wind");
-
-            bannerIcon.setAttribute(
-                "src",
-                `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`
-            );
-            banner.appendChild(bannerIcon);
-            bannerTemp.textContent = `Temperature: ${Math.round(
-                data.main.temp
-            )}&deg;C`;
-            bannerHumidity.textContent = `Humidity: ${data.main.humidity}%`;
-            bannerWind.textContent = `Wind Speed: ${Math.round(
-                data.wind.speed
-            )} km/h`;
-
-            banner.style.display = "block";
-
-            todayCityName.style.fontSize = "5rem";
-            todayCityName.style.fontWeight = "bold";
-            todayDate.style.fontSize = "2rem";
-            todayDate.style.fontWeight = "bold";
-            todayWeatherInfo.style.fontSize = "2rem";
-        })
+             // Set the background image based on the current weather
+             const background = document.querySelector("body");
+             const backgroundImageURL = `url('https://source.unsplash.com/1600x900/?${data.weather[0].main}')`;
+             background.style.backgroundImage = backgroundImageURL;
+         });
+      
 }
 
 // Five day weather forecast
@@ -168,18 +114,18 @@ function addedCity(city) {
         const currentList = localStorage.getItem("city");
         const newList = currentList !== null ? JSON.parse(currentList) : [];
         return newList;
-}
+    }
 };
 // adding city to local storage
 function cityLocalStorage(city) {
     const addedList = findData();
-  
+
     if (!addedList.includes(city)) {
-      addedList.push(city);
+        addedList.push(city);
     }
-  
+
     localStorage.setItem("city", JSON.stringify(addedList));
-  }
+}
 
 // Function for displaying cities
 function displayData() {
