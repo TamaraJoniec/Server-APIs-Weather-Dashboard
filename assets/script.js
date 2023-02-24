@@ -76,7 +76,7 @@ function weatherNow(city) {
 
             // get the HTML elements of the hero banner
             const banner = document.getElementById("hero-banner").style.display = "block";
-            const bannerIcon = banner.querySelector(".banner-icon");
+            const bannerIcon = banner.querySelector(".icon");
             const bannerTemp = banner.querySelector(".banner-temp");
             const bannerHumidity = banner.querySelector(".banner-humidity");
             const bannerWind = banner.querySelector(".banner-wind");
@@ -229,14 +229,14 @@ function displayData() {
 
 };
 
+// Add the search term to the search history
+function addToHistory(searchTerm) {
+    // Get the existing search history
+    var searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
+  
+    // Add the new search term to the search history
+    searchHistory.push(searchTerm);
 
+}  
 //Event listeners for search button
-// document.getElementById("search-button").addEventListener('click', appendCity);
 document.getElementById("search-button").addEventListener('click', locationURL);
-
-//Event listener for recent city search buttons
-document.querySelector(".history").addEventListener("click", (event) => {
-    event.preventDefault();
-    document.querySelector(".subheading").style.display = "inline";
-    locationURL();
-});
