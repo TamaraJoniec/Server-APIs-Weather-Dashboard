@@ -93,10 +93,6 @@ function weatherNow(city) {
             todayDate.style.fontWeight = "bold";
             todayWeatherInfo.style.fontSize = "2rem";
         })
-        .catch((error) => {
-            console.error(error);
-            alert("There was an error fetching the weather data. Please try again.");
-        });
 }
 
 // Five day weather forecast
