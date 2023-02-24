@@ -37,11 +37,6 @@ h5 {
     line-height: 1.25;
 }
 
-.banner-icon { size: 10%}
-.banner-temp { color:#83a4d4}
-.banner-humidity {color: #83a4d4;}
-.banner-wind { color: #83a4d4;}
-
 .list-cities {
     margin-bottom: 10px;
     padding: 1.5%;
@@ -51,7 +46,81 @@ h5 {
     text-decoration: none;
 
 }
-
+/* Style for the card container */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  /* Style for the individual card */
+  .day-card {
+    width: calc(33.33% - 10px); /* Set the width of each card */
+    margin-bottom: 20px; /* Add some margin at the bottom of each card */
+    background-color: #fff; /* Set the background color of each card */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Add a box shadow to each card */
+    border-radius: 5px; /* Add some border radius to each card */
+    overflow: hidden; /* Hide any overflow in each card */
+  }
+  
+  /* Style for the day name in each card */
+  .day-card .day-name {
+    padding: 10px; /* Add some padding to the day name */
+    font-size: 1.2rem; /* Set the font size of the day name */
+    font-weight: bold; /* Set the font weight of the day name */
+    text-align: center; /* Center the day name */
+  }
+  
+  /* Style for the weather icon in each card */
+  .day-card .day-icon {
+    display: block; /* Display the weather icon as a block element */
+    margin: 0 auto; /* Center the weather icon */
+    width: 50px; /* Set the width of the weather icon */
+    height: 50px; /* Set the height of the weather icon */
+  }
+  
+  /* Style for the temperature in each card */
+  .day-card .day-temp {
+    padding: 10px; /* Add some padding to the temperature */
+    font-size: 1.2rem; /* Set the font size of the temperature */
+    text-align: center; /* Center the temperature */
+  }
+  
+  #forecast-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  .forecast-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    width: 200px;
+    height: 250px;
+    padding: 20px;
+  }
+  
+  .day-of-week {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .forecast-card img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+  }
+  
+  .forecast-card div:not(.day-of-week) {
+    margin-bottom: 5px;
+  }
+   
 .icon {
     width: 10%;
     height: 10%;
@@ -74,16 +143,6 @@ button .subheading {
     font-size: 30px;
 }
 
-.weatherCard {
-
-    border-radius: var(--border-radius);
-    background-color: var(--gray);
-    color: var(--orange);
-    text-decoration: none;
-    margin: 10px;
-    padding: 1.5%;
-}
-
 .today {
     color: #D95276;
     font-size: 1.5rem;
@@ -96,7 +155,6 @@ button .subheading {
 .forecast-today {
     color: #D95276
 }
-
 
 .button {
 
