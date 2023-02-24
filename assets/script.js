@@ -75,7 +75,8 @@ function weatherNow(city) {
             todayWeatherInfo.appendChild(todayWind);
 
             // get the HTML elements of the hero banner
-            const banner = document.getElementById("hero-banner");
+            const banner = document.getElementById("hero-banner").style.display = "block";
+
             const bannerIcon = banner.querySelector(".banner-icon");
             const bannerTemp = banner.querySelector(".banner-temp");
             const bannerHumidity = banner.querySelector(".banner-humidity");
@@ -159,6 +160,17 @@ function weatherInfo(city) {
         });
 };
 
+function init() {
+    const form = document.querySelector('#search-form');
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const input = document.querySelector('#search-input');
+      const query = input.value;
+      weatherInfo(query);
+      input.value = '';
+    });
+  };
+  
 function addedCity(city) {
     newList = findData();
     cityFind = document.createElement("div");
