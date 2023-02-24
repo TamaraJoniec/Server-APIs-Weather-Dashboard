@@ -16,22 +16,15 @@
   <header class="container-fluid text-center weather-header">
     <h1 id="page-title">Weather Dashboard</h1>
   </header>
-
   <main>
-
     <section class="flex-row justify-space-between">
       <!-- search title -->
       <aside class="col-lg-3 pb-3">
-
         <!-- search form -->
         <input type="text" id="search-input" placeholder="London" />
         <!-- search button -->
-        <button type="submit" class="button search-button" id="search-button" aria-label="submit search">
-          <h3> Search</h3>
-        </button>
-
+        <button type="submit" class="button search-button" id="search-button" aria-label="submit search">Search</button>
         <!-- search history list -->
-
         <div id="search-history" class="list-cities history mt-4">
           <h5>Search History</h5>
           <ul>
@@ -41,26 +34,19 @@
       </aside>
       <!-- Weather information on right -->
     </section>
-
     <!-- main display -->
-
     <div class="hero-banner" id="hero-banner">
       <div class="hero__weather">
           <div class="hero__temp" id="hero-temp"></div>
           <div class="hero__desc" id="hero-desc"></div>
       </div>
     </div>
-  
-
     <!-- Five day -->
     <div>
       <h3 class="subheading text-center">Five-Day Weather Forecast</h3>
-      
       <div class="col d-flex justify-content-center" id="forecast-container"></div>
       <img id="icon">
     </div>
-
-
   </main>
 
   <!-- Moment.js -->

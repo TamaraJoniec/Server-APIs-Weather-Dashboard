@@ -54,7 +54,6 @@ h5 {
     margin-bottom: 5px;
   }
   
-  
 .search-history-btn {
     display: inline-block;
     background-color: #ddd;
@@ -68,10 +67,8 @@ h5 {
     font-weight: bold;
     transition: background-color 0.3s ease;
 }
-
-.search-history-btn:hover {
-    background-color: #aaa;
-    color: #fff;
+.button:hover {
+    background-color:#83a4d4;
 }
 
 .hero-banner {
@@ -116,15 +113,6 @@ h5 {
   left: 50%;
   transform: translateX(-50%);
   font-size: 2rem;
-}
-
-.icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 150px;
-    height: 150px;
 }
 
 .hero__weather {
@@ -195,24 +183,6 @@ h5 {
   .forecast-card div:not(.day-of-week) {
     margin-bottom: 5px;
   }
-   
-.hero-icon {
-    width: 10%;
-    height: 10%;
-}
-
-button .subheading {
-    color: white;
-}
-
-#search-button {
-    color: var(--aqua);
-    width: auto;
-}
-
-#search-button:hover {
-    color: var(--yellow);
-}
 
 .big {
     font-size: 30px;
@@ -225,10 +195,4 @@ button .subheading {
     /* increase size by 10% */
     z-index: 1;
     /* ensures it appears on top of other cards */
-}
-
-
-.button:hover {
-    color: var(--pink);
-    background-color:#83a4d4;
 }
