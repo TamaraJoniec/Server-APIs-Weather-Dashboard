@@ -86,6 +86,7 @@ function weatherNow(city) {
                 "src",
                 `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`
             );
+            banner.appendChild(bannerIcon);
             bannerTemp.textContent = `Temperature: ${Math.round(
                 data.main.temp
             )}&deg;C`;

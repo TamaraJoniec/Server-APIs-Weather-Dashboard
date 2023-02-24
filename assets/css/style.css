@@ -25,11 +25,12 @@ body {
 h1,
 h2,
 h3,
-h4,
-h5 {
+h4 {
     color: white;
 }
-
+h5 {
+    color: #83a4d4;
+}
 .subheading {
     font-weight: 700;
     color: var(--gray);
@@ -40,6 +41,7 @@ h5 {
     background-color: #f2f2f2;
     border-radius: 5px;
     padding: 10px;
+    color:#333;
   }
   
   .list-cities ul {
@@ -53,8 +55,6 @@ h5 {
   }
   
   
-  
-
 .search-history-btn {
     display: inline-block;
     background-color: #ddd;
@@ -160,37 +160,6 @@ h5 {
   }
   
   /* Style for the individual card */
-  .day-card {
-    width: calc(33.33% - 10px); /* the width of each card */
-    margin-bottom: 20px; /* some margin at the bottom of each card */
-    background-color: #fff; /* the background color of each card */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* a box shadow to each card */
-    border-radius: 5px; /* some border radius to each card */
-    overflow: hidden; /* Hide any overflow in each card */
-  }
-  
-  /* Style for the day name in each card */
-  .day-card .day-name {
-    padding: 10px; /* some padding to the day name */
-    font-size: 1.2rem; /* the font size of the day name */
-    font-weight: bold; /* the font weight of the day name */
-    text-align: center; /* the day name */
-  }
-  
-  /* Style for the weather icon in each card */
-  .day-card .day-icon {
-    display: block; /* the weather icon as a block element */
-    margin: 0 auto; /* Center the weather icon */
-    width: 50px; /* the width of the weather icon */
-    height: 50px; /* the height of the weather icon */
-  }
-  
-  /* Style for the temperature in each card */
-  .day-card .day-temp {
-    padding: 10px; /* some padding to the temperature */
-    font-size: 1.2rem; /* the font size of the temperature */
-    text-align: center; /* the temperature */
-  }
 
   #forecast-container {
     display: flex;
@@ -227,7 +196,7 @@ h5 {
     margin-bottom: 5px;
   }
    
-.icon {
+.hero-icon {
     width: 10%;
     height: 10%;
 }
@@ -258,28 +227,8 @@ button .subheading {
     /* ensures it appears on top of other cards */
 }
 
-.forecast-today {
-    color: #D95276
-}
-
-.button {
-
-    display: block;
-    margin: 5px 0;
-    color: var(--aqua);
-    background-color: var(---yellow);
-    font-size: 1.3rem;
-    text-decoration: none;
-    padding: 6px 5px;
-    width: 100%;
-}
 
 .button:hover {
     color: var(--pink);
-    background-color: var(--orange);
+    background-color:#83a4d4;
 }
-
-.button-inline {
-    display: inline;
-}
-
