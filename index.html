@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en-gb">
 
@@ -21,8 +20,11 @@
 
   <main>
     <!-- max-width for ultra wide resolutions -->
+     <div class="jumbotron jumbotron-fluid today">
+      <div class="today"><img id="icon"></div>
+    </div>
+    
     <section class="flex-row justify-space-between">
-      <div class="col-12 col-sm-12 col-md-4 float-left">
         <!-- search title -->
         <aside class="col-lg-3 pb-3">
 
@@ -37,13 +39,14 @@
 
           <div id="search-history" class="list-cities history mt-4">
             <h5>Search History</h5>
-            <ul >
+            <ul>
               <div id="buttons-view"></div>
             </ul>
           </div>
         </aside>
         <!-- Weather information on right -->
     </section>
+   
     <!-- main display -->
     <div>
       <table class="city">
@@ -56,14 +59,15 @@
     <div class="col-12 col-sm-12 col-md-8 float-right">
       <div>
         <h3 class="subheading text-center">Five-Day Weather Forecast</h3>
-        <div id="forecast-container"></div>            
+
+        <div id="forecast-container"></div>
         <table>
-              <tr>
-                <img id="icon">
-              </tr>
-            </table>
-          </div>
+          <tr>
+            <img id="icon">
+          </tr>
+        </table>
       </div>
+    </div>
     </div>
   </main>
 

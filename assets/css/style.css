@@ -72,8 +72,13 @@ button .subheading {
     padding: 1.5%;
 }
 
-.forecast-container {
-    display: flex;
+.today {
+    transform: scale(1.1); /* increase size by 10% */
+    z-index: 1; /* ensure it appears on top of other cards */
+  }
+
+.forecast-today {
+    color:#D95276
 }
 
 
