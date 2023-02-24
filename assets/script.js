@@ -29,17 +29,28 @@ function locationURL() {
 function weatherNow(city) {
     const apiKey = "bd4f86e586f7c181c1e585358d3c507c";
     const currentWeatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${city.name}&units=metric&appid=${apiKey}`;
-
+  
     fetch(currentWeatherURL)
-        .then(response => response.json())
-        .then(data => {
-             // Set the background image based on the current weather
-             const background = document.querySelector("body");
-             const backgroundImageURL = `url('https://source.unsplash.com/1600x900/?${data.weather[0].main}')`;
-             background.style.backgroundImage = backgroundImageURL;
-         });
-      
-}
+      .then(response => response.json())
+      .then(data => {
+        // Display the current weather information above the weather cards
+        const currentWeatherElement = document.getElementById("current-weather");
+        currentWeatherElement.innerHTML = `
+          <div>
+            <h2>Current Weather in ${city.name}</h2>
+            <p>${data.weather[0].description}</p>
+            <p>Temperature: ${data.main.temp} &#8451;</p>
+            <p>Feels Like: ${data.main.feels_like} &#8451;</p>
+          </div>
+        `;
+  
+        // Set the background image based on the current weather
+        const background = document.querySelector("body");
+        const backgroundImageURL = `url('https://source.unsplash.com/1600x900/?${data.weather[0].main}')`;
+        background.style.backgroundImage = backgroundImageURL;
+      });
+  }
+  
 
 // Five day weather forecast
 
