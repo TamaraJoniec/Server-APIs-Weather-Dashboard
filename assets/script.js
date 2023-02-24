@@ -8,8 +8,6 @@ let displayIcon;
 let cityFind = 0;
 let imageSource;
 let newList;
-let date = moment().format("ddd D MMM YYYY");
-document.getElementById("liveWeather").textContent = date;
 let cityTitle = document.getElementById("city-title");
 let icon = document.getElementById("weather-icon");
 let temperature = document.getElementById("temperature");
@@ -46,7 +44,7 @@ function weatherNow(city) {
             todayWeather.innerHTML = "";
 
             // Creating and append elements
-            const weatherCardToday = `<div class="weather-card-today ${isToday ? "today" : ""}"></div>`;
+            weatherCard = `<div class="weather-card-today ${isToday ? "today" : ""}"></div>`;
             const todayCityName = document.createElement("h2");
             todayCityName.textContent = data.name;
             todayWeather.appendChild(todayCityName);
