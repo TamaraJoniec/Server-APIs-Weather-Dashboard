@@ -32,72 +32,57 @@ function locationURL() {
             weatherNow(city);
         });
 };
-
 function weatherNow(city) {
-    const apiKey = "your_api_key_here";
-    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    // API endpoint for current weather data
+    const currentWeatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
   
-    fetch(apiUrl)
-      .then(response => {
-        
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then(data => {
-        if (i === 0) {
-            card.classList.add("today");
-          }
-          
-        const forecastContainer = document.querySelector(".today");
-        forecastContainer.innerHTML = "";
+    fetch(currentWeatherURL)
+      .then((response) => response.json())
+      .then((data) => {
+        // Code to display today's weather
+        const todayWeather = document.querySelector("#today-weather");
   
-        const cityElement = document.querySelector(".city");
-        cityElement.innerHTML = "";
+        // Clearing existing content
+        todayWeather.innerHTML = "";
   
-        const cityTitle = document.createElement("h3");
-        cityTitle.textContent = `${data.name}, ${data.sys.country}`;
-        cityElement.appendChild(cityTitle);
+        // Creating and append elements
+        const todayCityName = document.createElement("h2");
+        todayCityName.textContent = data.name;
+        todayWeather.appendChild(todayCityName);
   
-        const dateTime = document.createElement("div");
-        const date = new Date();
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        dateTime.textContent = date.toLocaleDateString(undefined, options);
-        cityElement.appendChild(dateTime);
+        const todayDate = document.createElement("h3");
+        todayDate.textContent = new Date().toLocaleDateString();
+        todayWeather.appendChild(todayDate);
   
-        const weatherCard = document.createElement("div");
-        weatherCard.classList.add("weatherCard");
+        const todayWeatherInfo = document.createElement("div");
+        todayWeatherInfo.classList.add("today-weather-info");
+        todayWeather.appendChild(todayWeatherInfo);
   
-        const forecastIcon = document.createElement("div");
-        forecastIcon.classList.add("forecast-icon");
-        const icon = document.createElement("img");
-        icon.src = `https://openweathermap.org/img/w/${data.weather[0].icon}.png`;
-        forecastIcon.appendChild(icon);
-        weatherCard.appendChild(forecastIcon);
+        const todayTemp = document.createElement("p");
+        todayTemp.innerHTML = `Temperature: ${Math.round(
+          data.main.temp
+        )}&deg;C`;
+        todayWeatherInfo.appendChild(todayTemp);
   
-        const forecastTemp = document.createElement("div");
-        forecastTemp.classList.add("forecast-temp");
-        forecastTemp.textContent = `${Math.round(data.main.temp)}°C`;
-        weatherCard.appendChild(forecastTemp);
+        const todayHumidity = document.createElement("p");
+        todayHumidity.textContent = `Humidity: ${data.main.humidity}%`;
+        todayWeatherInfo.appendChild(todayHumidity);
   
-        const forecastWind = document.createElement("div");
-        forecastWind.classList.add("forecast-wind");
-        forecastWind.textContent = `Wind: ${data.wind.speed} m/s`;
-        weatherCard.appendChild(forecastWind);
+        const todayWind = document.createElement("p");
+        todayWind.innerHTML = `Wind Speed: ${Math.round(
+          data.wind.speed
+        )} km/h`;
+        todayWeatherInfo.appendChild(todayWind);
   
-        const forecastHumidity = document.createElement("div");
-        forecastHumidity.classList.add("forecast-humidity");
-        forecastHumidity.textContent = `Humidity: ${data.main.humidity}%`;
-        weatherCard.appendChild(forecastHumidity);
-  
-        forecastContainer.appendChild(weatherCard);
-      })
-      .catch(error => {
-        console.error("Error fetching weather data:", error);
+        // Setting the font size and weight of today's weather to be bigger and bolder
+        todayCityName.style.fontSize = "3rem";
+        todayCityName.style.fontWeight = "bold";
+        todayDate.style.fontSize = "2rem";
+        todayDate.style.fontWeight = "bold";
+        todayWeatherInfo.style.fontSize = "2rem";
       });
-      
   }
+  
 
 function weatherInfo(city) {
     fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&appid=bd4f86e586f7c181c1e585358d3c507c&units=40"&cnt=40`)
