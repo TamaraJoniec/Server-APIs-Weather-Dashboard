@@ -30,7 +30,7 @@ function locationURL() {
             weatherNow(city);
         });
 };
-
+// hero banner with today's weather displayed.
 function weatherNow(city) {
     // API endpoint for current weather data
     const currentWeatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
@@ -73,9 +73,6 @@ function weatherNow(city) {
         )} km/h`;
         todayWeatherInfo.appendChild(todayWind);
   
-        // get today's weather data
-        const todayWeatherData = weatherData[0];
-  
         // get the HTML elements of the hero banner
         const banner = document.getElementById("hero-banner");
         const bannerIcon = banner.querySelector(".banner-icon");
@@ -89,10 +86,14 @@ function weatherNow(city) {
           "src",
           `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`
         );
-        bannerTemp.textContent = `${Math.round(data.main.temp)} °C`;
-        bannerHumidity.textContent = `${data.main.humidity}%`;
-        bannerWind.textContent = `${Math.round(data.wind.speed)} m/s`;
-        bannerUVIndex.textContent = todayWeatherData.uvi;
+        bannerTemp.textContent = `Temperature: ${Math.round(
+          data.main.temp
+        )}&deg;C`;
+        bannerHumidity.textContent = `Humidity: ${data.main.humidity}%`;
+        bannerWind.innerHTML = `Wind Speed: ${Math.round(
+          data.wind.speed
+        )} km/h`;
+        bannerUVIndex.textContent = "";
   
         // make the hero banner visible
         banner.style.display = "block";
@@ -103,11 +104,14 @@ function weatherNow(city) {
         todayDate.style.fontSize = "2rem";
         todayDate.style.fontWeight = "bold";
         todayWeatherInfo.style.fontSize = "2rem";
+      })
+      .catch((error) => {
+        console.error(error);
+        alert("There was an error fetching the weather data. Please try again.");
       });
   }
   
-  
-
+// Five day weather forecast
 function weatherInfo(city) {
     const forecastContainer = document.getElementById("forecast-container");
     forecastContainer.innerHTML = ""; // clear old weather cards
