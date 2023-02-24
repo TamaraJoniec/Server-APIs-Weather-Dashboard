@@ -71,6 +71,27 @@ function weatherNow(city) {
             todayWind.innerHTML = `Wind Speed: ${Math.round(
                 data.wind.speed
             )} km/h`;
+
+            // get today's weather data
+            todayWeather = weatherData[0];
+
+            // get the HTML elements of the hero banner
+            let banner = document.getElementById('hero-banner');
+            let bannerIcon = banner.querySelector('.banner-icon');
+            let bannerTemp = banner.querySelector('.banner-temp');
+            let bannerHumidity = banner.querySelector('.banner-humidity');
+            let bannerWind = banner.querySelector('.banner-wind');
+            let bannerUVIndex = banner.querySelector('.banner-uvindex');
+
+            // update the HTML of the hero banner with today's weather data
+            bannerIcon.setAttribute('src', getIconUrl(todayWeather.weather[0].icon));
+            bannerTemp.textContent = todayWeather.temp.day.toFixed(1) + ' °C';
+            bannerHumidity.textContent = todayWeather.humidity + '%';
+            bannerWind.textContent = todayWeather.wind_speed + ' m/s';
+            bannerUVIndex.textContent = todayWeather.uvi;
+
+            // make the hero banner visible
+            banner.style.display = 'block';
             todayWeatherInfo.appendChild(todayWind);
 
             // Setting the font size and weight of today's weather to be bigger and bolder

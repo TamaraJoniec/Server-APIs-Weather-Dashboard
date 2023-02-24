@@ -8,6 +8,7 @@
 }
 
 body {
+
     background: #83a4d4;
     /* backup for old browsers */
     background: -webkit-linear-gradient(to right, #b6fbff, #83a4d4);
@@ -35,6 +36,11 @@ h5 {
     color: var(--gray);
     line-height: 1.25;
 }
+
+.banner-icon { size: 10%}
+.banner-temp { color:#83a4d4}
+.banner-humidity {color: #83a4d4;}
+.banner-wind { color: #83a4d4;}
 
 .list-cities {
     margin-bottom: 10px;
@@ -79,7 +85,7 @@ button .subheading {
 }
 
 .today {
-    color:#D95276;
+    color: #D95276;
     font-size: 1.5rem;
     transform: scale(1.1);
     /* increase size by 10% */
@@ -113,10 +119,3 @@ button .subheading {
     display: inline;
 }
 
-.bg-light {
-    width: auto;
-}
-
-.float-left {
-    float: left !important;
-}
