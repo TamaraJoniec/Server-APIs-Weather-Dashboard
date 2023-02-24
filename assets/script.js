@@ -39,12 +39,17 @@ function weatherNow(city) {
   
     fetch(apiUrl)
       .then(response => {
+        
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         return response.json();
       })
       .then(data => {
+        if (i === 0) {
+            card.classList.add("today");
+          }
+          
         const forecastContainer = document.querySelector(".today");
         forecastContainer.innerHTML = "";
   
@@ -91,6 +96,7 @@ function weatherNow(city) {
       .catch(error => {
         console.error("Error fetching weather data:", error);
       });
+      
   }
 
 function weatherInfo(city) {
