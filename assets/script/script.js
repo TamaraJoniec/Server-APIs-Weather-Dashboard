@@ -29,16 +29,16 @@ function locationURL() {
 function weatherNow(city) {
     const apiKey = "bd4f86e586f7c181c1e585358d3c507c";
     const currentWeatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${city.name}&units=metric&appid=${apiKey}`;
-  
+
     fetch(currentWeatherURL)
-      .then(response => response.json())
-      .then(data => {
-        const currentWeatherElement = document.getElementById("current-weather");
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        const iconCode = data.weather[0].icon;
-        const iconUrl = `http://openweathermap.org/img/w/${iconCode}.png`;
-        
-        currentWeatherElement.innerHTML = `
+        .then(response => response.json())
+        .then(data => {
+            const currentWeatherElement = document.getElementById("current-weather");
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const iconCode = data.weather[0].icon;
+            const iconUrl = `http://openweathermap.org/img/w/${iconCode}.png`;
+
+            currentWeatherElement.innerHTML = `
           <div>
             <h2>Current Weather in ${city.name}</h2>
             <p>${data.weather[0].description}</p>
@@ -50,15 +50,15 @@ function weatherNow(city) {
             <p>${new Date(data.dt * 1000).toLocaleDateString('en-GB', options)}</p>
           </div>
         `;
-        
-  
-        // Set the background image based on the current weather
-        const background = document.querySelector("body");
-        const backgroundImageURL = `url('https://source.unsplash.com/1600x900/?${data.weather[0].main}')`;
-        background.style.backgroundImage = backgroundImageURL;
-      });
-  }
-  
+
+
+            // Set the background image based on the current weather
+            const background = document.querySelector("body");
+            const backgroundImageURL = `url('https://source.unsplash.com/1600x900/?${data.weather[0].main}')`;
+            background.style.backgroundImage = backgroundImageURL;
+        });
+}
+
 
 // Five day weather forecast
 
@@ -89,11 +89,11 @@ function weatherInfo(city) {
                 const forecastHumidity = document.createElement("div");
 
                 forecastIcon.setAttribute("src", `https://openweathermap.org/img/wn/${data.list[i].weather[0].icon}.png`);
-                const celsiusTemp = (data.list[i].main.temp - 32) * 5/9; // convert temperature to Celsius
+                const celsiusTemp = (data.list[i].main.temp - 32) * 5 / 9; // convert temperature to Celsius
                 forecastTemp.textContent = `Temperature: ${celsiusTemp.toFixed(1)} °C`;
                 forecastWind.textContent = `Wind: ${data.list[i].wind.speed} MPH`;
                 forecastHumidity.textContent = `Humidity: ${data.list[i].main.humidity} %`;
-                
+
                 weatherCard.appendChild(forecastIcon);
                 weatherCard.appendChild(forecastTemp);
                 weatherCard.appendChild(forecastWind);
@@ -104,8 +104,8 @@ function weatherInfo(city) {
 
             forecastContainer.append(...weatherCards);
         });
-}
-
+};
+// Initializes the application by adding event listeners and setting up the initial state of the application.
 function init() {
     const form = document.querySelector('#search-form');
     form.addEventListener('submit', (event) => {
@@ -115,8 +115,24 @@ function init() {
         weatherInfo(query);
         input.value = '';
     });
-}
 
+    // get the search history list and list items
+    const searchHistoryList = document.getElementById('search-history');
+    const searchHistoryItems = searchHistoryList.getElementsByTagName('button');
+
+    // add a click event listener to each list item
+    for (let i = 0; i < searchHistoryItems.length; i++) {
+        searchHistoryItems[i].addEventListener('click', function () {
+            // get the text content of the clicked button
+            const city = this.textContent;
+
+            // reload the page with the corresponding city's weather forecast
+            weatherInfo(city);
+        });
+    }
+};
+
+// adds a city to the list of saved cities and displays it 
 function addedCity(city) {
     const newList = findData();
     const cityFind = document.createElement("div");
@@ -126,16 +142,17 @@ function addedCity(city) {
 
     if (!newList.includes(city.name)) {
         listCities.appendChild(cityFind);
+        cityLocalStorage(city.name); // calling cityLocalStorage
     }
-
     document.querySelector(".subheading").setAttribute("style", "display:inline");
-
+    // get the current list of saved cities from local storage
     function findData() {
         const currentList = localStorage.getItem("city");
         const newList = currentList !== null ? JSON.parse(currentList) : [];
         return newList;
     }
 };
+
 // adding city to local storage
 function cityLocalStorage(city) {
     const addedList = findData();
@@ -143,9 +160,9 @@ function cityLocalStorage(city) {
     if (!addedList.includes(city)) {
         addedList.push(city);
     }
-
     localStorage.setItem("city", JSON.stringify(addedList));
-}
+};
+
 // Function for displaying cities
 function displayData() {
     const searchRecord = findData();
@@ -157,7 +174,16 @@ function displayData() {
     }
 
     listCities.innerHTML = citiesHtml;
-}
+
+    const historyList = document.getElementById("history-list");
+    const historyItem = document.createElement("button");
+    historyItem.classList.add("history-item");
+    historyItem.textContent = city.name;
+    historyItem.addEventListener("click", function () {
+        weatherInfo(city);
+    });
+    historyList.appendChild(historyItem);
+};
 
 // debounce the search input
 let timeoutId;
@@ -172,21 +198,7 @@ function addToHistory(searchTerm) {
     var searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
     // Add the new search term to the search history
     searchHistory.push(searchTerm);
-}
 
-// get the search history list and list items
-const searchHistoryList = document.getElementById('search-history');
-const searchHistoryItems = searchHistoryList.getElementsByTagName('button');
-
-// add a click event listener to each list item
-for (let i = 0; i < searchHistoryItems.length; i++) {
-  searchHistoryItems[i].addEventListener('click', function() {
-    // get the text content of the clicked button
-    const city = this.textContent;
-    
-    // reload the page with the corresponding city's weather forecast
-    window.location.href = `https://example.com/weather?city=${city}`;
-  });
 }
 
 //Event listeners for search button
