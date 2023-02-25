@@ -132,19 +132,25 @@ function init() {
     }
 };
 
-// adds a city to the list of saved cities and displays it 
 function addedCity(city) {
     const newList = findData();
-    const cityFind = document.createElement("div");
-    cityFind.setAttribute("id", city.name);
-    cityFind.textContent = city.name;
-    cityFind.classList.add("h5");
+    const cityBtn = document.createElement("button"); // create a button element
+    cityBtn.setAttribute("id", city.name);
+    cityBtn.textContent = city.name;
+    cityBtn.classList.add("h5");
 
     if (!newList.includes(city.name)) {
-        listCities.appendChild(cityFind);
+        listCities.appendChild(cityBtn);
         cityLocalStorage(city.name); // calling cityLocalStorage
     }
+
+    // add a click event listener to the button
+    cityBtn.addEventListener('click', function () {
+        weatherInfo(city.name); // reload the page with the corresponding city's weather forecast
+    });
+
     document.querySelector(".subheading").setAttribute("style", "display:inline");
+
     // get the current list of saved cities from local storage
     function findData() {
         const currentList = localStorage.getItem("city");
@@ -152,6 +158,7 @@ function addedCity(city) {
         return newList;
     }
 };
+
 
 // adding city to local storage
 function cityLocalStorage(city) {
