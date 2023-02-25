@@ -65,7 +65,7 @@ function weatherInfo(city) {
     const forecastContainer = document.getElementById("forecast-container");
     forecastContainer.innerHTML = ""; // clear old weather cards
 
-    fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&appid=bd4f86e586f7c181c1e585358d3c507c&units=imperial&cnt=40`)
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&appid=bd4f86e586f7c181c1e585358d3c507c&units=imperial&cnt=5`)
         .then(response => response.json())
         .then(data => {
             const currentDate = new Date();
