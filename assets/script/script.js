@@ -33,18 +33,24 @@ function weatherNow(city) {
     fetch(currentWeatherURL)
       .then(response => response.json())
       .then(data => {
-        // Display the current weather information above the weather cards
         const currentWeatherElement = document.getElementById("current-weather");
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const iconCode = data.weather[0].icon;
+        const iconUrl = `http://openweathermap.org/img/w/${iconCode}.png`;
+        
         currentWeatherElement.innerHTML = `
           <div>
             <h2>Current Weather in ${city.name}</h2>
             <p>${data.weather[0].description}</p>
+            <img src="${iconUrl}" alt="${data.weather[0].description}">
             <p>Temperature: ${data.main.temp} &#8451;</p>
             <p>Feels Like: ${data.main.feels_like} &#8451;</p>
+            <p>Humidity: ${data.main.humidity}%</p>
+            <p>Wind: ${data.wind.speed} MPH</p>
             <p>${new Date(data.dt * 1000).toLocaleDateString('en-GB', options)}</p>
           </div>
         `;
+        
   
         // Set the background image based on the current weather
         const background = document.querySelector("body");
@@ -83,10 +89,11 @@ function weatherInfo(city) {
                 const forecastHumidity = document.createElement("div");
 
                 forecastIcon.setAttribute("src", `https://openweathermap.org/img/wn/${data.list[i].weather[0].icon}.png`);
-                forecastTemp.textContent = `Temperature: ${data.list[i].main.temp} F`;
+                const celsiusTemp = (data.list[i].main.temp - 32) * 5/9; // convert temperature to Celsius
+                forecastTemp.textContent = `Temperature: ${celsiusTemp.toFixed(1)} °C`;
                 forecastWind.textContent = `Wind: ${data.list[i].wind.speed} MPH`;
                 forecastHumidity.textContent = `Humidity: ${data.list[i].main.humidity} %`;
-
+                
                 weatherCard.appendChild(forecastIcon);
                 weatherCard.appendChild(forecastTemp);
                 weatherCard.appendChild(forecastWind);
