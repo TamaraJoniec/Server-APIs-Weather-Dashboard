@@ -35,12 +35,14 @@ function weatherNow(city) {
       .then(data => {
         // Display the current weather information above the weather cards
         const currentWeatherElement = document.getElementById("current-weather");
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         currentWeatherElement.innerHTML = `
           <div>
             <h2>Current Weather in ${city.name}</h2>
             <p>${data.weather[0].description}</p>
             <p>Temperature: ${data.main.temp} &#8451;</p>
             <p>Feels Like: ${data.main.feels_like} &#8451;</p>
+            <p>${new Date(data.dt * 1000).toLocaleDateString('en-GB', options)}</p>
           </div>
         `;
   
