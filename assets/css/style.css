@@ -145,15 +145,6 @@ button:hover {
   margin-bottom: 5px;
 }
 
-.icon {
-  width: 10%;
-  height: 10%;
-}
-
-button .subheading {
-  color: white;
-}
-
 #search-button {
   background-color: transparent;
   border: none;
@@ -168,7 +159,6 @@ button .subheading {
 #search-button:hover {
   color: orange;
 }
-
 
 .big {
   font-size: 30px;

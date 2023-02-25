@@ -146,7 +146,6 @@ function cityLocalStorage(city) {
 
     localStorage.setItem("city", JSON.stringify(addedList));
 }
-
 // Function for displaying cities
 function displayData() {
     const searchRecord = findData();
@@ -154,21 +153,11 @@ function displayData() {
     let citiesHtml = "";
 
     for (let i = 0; i < searchRecord.length; i++) {
-        citiesHtml += `<h4 id="${searchRecord[i].name}" class="h4">${searchRecord[i].name}</h4>`;
+        citiesHtml += `<button id="${searchRecord[i].name}" class="city-button">${searchRecord[i].name}</button>`;
     }
 
     listCities.innerHTML = citiesHtml;
-
-    const historyList = document.getElementById("history-list");
-    const historyItem = document.createElement("button");
-    historyItem.classList.add("history-item");
-    historyItem.textContent = city.name;
-    historyItem.addEventListener("click", function () {
-        weatherInfo(city);
-    });
-    historyList.appendChild(historyItem);
-
-};
+}
 
 // debounce the search input
 let timeoutId;
@@ -183,17 +172,16 @@ function addToHistory(searchTerm) {
     var searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
     // Add the new search term to the search history
     searchHistory.push(searchTerm);
-
 }
 
 // get the search history list and list items
 const searchHistoryList = document.getElementById('search-history');
-const searchHistoryItems = searchHistoryList.getElementsByTagName('li');
+const searchHistoryItems = searchHistoryList.getElementsByTagName('button');
 
 // add a click event listener to each list item
 for (let i = 0; i < searchHistoryItems.length; i++) {
   searchHistoryItems[i].addEventListener('click', function() {
-    // get the text content of the clicked list item
+    // get the text content of the clicked button
     const city = this.textContent;
     
     // reload the page with the corresponding city's weather forecast
