@@ -57,23 +57,22 @@ h5 {
   margin-bottom: 5px;
 }
 
-.search-history-btn {
-  display: inline-block;
-  background-color: #ddd;
-  color: #333;
+button {
+  display: inline;
+  margin: 10px 0;
+  padding: 10px 20px;
   border: none;
-  padding: 10px;
-  margin: 5px;
-  cursor: pointer;
   border-radius: 5px;
   font-size: 16px;
   font-weight: bold;
-  transition: background-color 0.3s ease;
+  color: #fff;
+  background-color: #333;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
 }
 
-.search-history-btn:hover {
-  background-color: #aaa;
-  color: #fff;
+button:hover {
+  background-color: #444;
 }
 
 /* Style for the city and current weather information */
