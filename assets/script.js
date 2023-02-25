@@ -168,7 +168,6 @@ searchInput.addEventListener("input", function () {
     timeoutId = setTimeout(locationURL, 500);
 });
 
-
 // Add the search term to the search history
 function addToHistory(searchTerm) {
     // Get the existing search history
@@ -177,6 +176,22 @@ function addToHistory(searchTerm) {
     searchHistory.push(searchTerm);
 
 }
+
+// get the search history list and list items
+const searchHistoryList = document.getElementById('search-history');
+const searchHistoryItems = searchHistoryList.getElementsByTagName('li');
+
+// add a click event listener to each list item
+for (let i = 0; i < searchHistoryItems.length; i++) {
+  searchHistoryItems[i].addEventListener('click', function() {
+    // get the text content of the clicked list item
+    const city = this.textContent;
+    
+    // reload the page with the corresponding city's weather forecast
+    window.location.href = `https://example.com/weather?city=${city}`;
+  });
+}
+
 //Event listeners for search button
 document.getElementById("search-button").addEventListener('click', locationURL);
 
