@@ -163,7 +163,7 @@ function cityLocalStorage(city) {
     localStorage.setItem("city", JSON.stringify(addedList));
 };
 
-// Function for displaying cities
+// Function for displaying cities in the search history
 function displayData() {
     const searchRecord = findData();
     const listCities = document.querySelector(".list-cities");
@@ -180,10 +180,15 @@ function displayData() {
     historyItem.classList.add("history-item");
     historyItem.textContent = city.name;
     historyItem.addEventListener("click", function () {
+        const city = this.textContent;
         weatherInfo(city);
+        addedCity({ name: city });
+        weatherNow(city);
     });
     historyList.appendChild(historyItem);
+
 };
+
 
 // debounce the search input
 let timeoutId;
