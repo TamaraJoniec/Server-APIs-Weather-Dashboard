@@ -51,7 +51,6 @@ function weatherNow(city) {
           </div>
         `;
 
-
             // Set the background image based on the current weather
             const background = document.querySelector("body");
             const backgroundImageURL = `url('https://source.unsplash.com/1600x900/?${data.weather[0].main}')`;

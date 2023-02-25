@@ -56,6 +56,25 @@ h5 {
   list-style-type: none;
   margin-bottom: 5px;
 }
+.list-cities button {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.list-cities button:hover {
+  background-color: #3e8e41;
+}
+
+.list-cities button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.5);
+}
+
 
 button {
   display: inline;
