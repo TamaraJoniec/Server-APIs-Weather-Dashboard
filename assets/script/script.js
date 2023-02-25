@@ -177,24 +177,22 @@ function displayData() {
     let citiesHtml = "";
 
     for (let i = 0; i < searchRecord.length; i++) {
-        citiesHtml += `<button id="${searchRecord[i].name}" class="city-button">${searchRecord[i].name}</button>`;
+        citiesHtml += `<button id="${searchRecord[i]}" class="city-button">${searchRecord[i]}</button>`;
     }
 
     listCities.innerHTML = citiesHtml;
 
-    const historyList = document.getElementById("history-list");
-    const historyItem = document.createElement("button");
-    historyItem.classList.add("history-item");
-    historyItem.textContent = city.name;
-    historyItem.addEventListener("click", function () {
-        const city = this.textContent;
-        weatherInfo(city);
-        addedCity({ name: city });
-        weatherNow(city);
-    });
-    historyList.appendChild(historyItem);
+    // add a click event listener to each button
+    const cityButtons = document.querySelectorAll(".city-button");
+    for (let i = 0; i < cityButtons.length; i++) {
+        cityButtons[i].addEventListener("click", function () {
+            weatherInfo(this.id); // reload the page with the corresponding city's weather forecast
+        });
+    }
 
+    document.querySelector(".subheading").setAttribute("style", "display:inline");
 };
+
 
 
 // debounce the search input
