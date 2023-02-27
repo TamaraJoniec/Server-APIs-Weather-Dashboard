@@ -149,16 +149,14 @@ function addedCity(city) {
     });
 
     document.querySelector(".subheading").setAttribute("style", "display:inline");
+};
 
-    // get the current list of saved cities from local storage
+  // get the current list of saved cities from local storage
     function findData() {
         const currentList = localStorage.getItem("city");
         const newList = currentList !== null ? JSON.parse(currentList) : [];
         return newList;
-    }
-};
-
-
+    };
 // adding city to local storage
 function cityLocalStorage(city) {
     const addedList = findData();
