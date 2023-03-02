@@ -115,6 +115,7 @@ function init() {
         input.value = '';
     });
 
+
     // get the search history list and list items
     const searchHistoryList = document.getElementById('search-history');
     const searchHistoryItems = searchHistoryList.getElementsByTagName('button');
@@ -129,7 +130,11 @@ function init() {
             weatherInfo(city);
         });
     }
+
+    // Display saved cities in the search history
+    displayData();
 };
+
 
 function addedCity(city) {
     const newList = findData();
@@ -148,16 +153,18 @@ function addedCity(city) {
         weatherInfo(city.name); // reload the page with the corresponding city's weather forecast
     });
 
-    document.querySelector(".subheading").setAttribute("style", "display:inline");
+    // Display saved cities in the search history
+    displayData();
 };
 
-  // get the current list of saved cities from local storage
-    function findData() {
-        const currentList = localStorage.getItem("city");
-        const newList = currentList !== null ? JSON.parse(currentList) : [];
-        return newList;
-    };
-// adding city to local storage
+// Get the current list of saved cities from local storage
+function findData() {
+    const currentList = localStorage.getItem("city");
+    const newList = currentList !== null ? JSON.parse(currentList) : [];
+    return newList;
+};
+
+// Add city to local storage
 function cityLocalStorage(city) {
     const addedList = findData();
 
@@ -189,7 +196,6 @@ function displayData() {
 
     document.querySelector(".subheading").setAttribute("style", "display:inline");
 };
-
 
 
 // debounce the search input
