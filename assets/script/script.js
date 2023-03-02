@@ -135,25 +135,26 @@ function weatherInfo(city) {
 
 // Initialize the application
 function init() {
-  // Get the form element
-  const form = document.querySelector("#search-form");
-
   // Add an event listener to the form to prevent default form submission
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     locationURL();
-    const input = document.querySelector("#search-input");
     input.value = "";
   });
 
-  // Add event listeners to the search history items
-  searchHistoryItems.forEach((item) => {
-    item.addEventListener("click", (event) => {
-      const query = event.target.textContent;
-      locationURL();
-      const input = document.querySelector("#search-input");
-      input.value = query;
-    });
+  // Add event listener to search history container using event delegation
+  searchHistory.addEventListener("click", (event) => {
+    // Check if the click event was triggered by a search result
+    if (event.target.classList.contains("search-history")) {
+      // Get the city object from the data attribute of the search result
+      const city = JSON.parse(event.target.dataset.city);
+      // Update the weather information for the selected city
+      weatherInfo(city);
+      addedCity(city);
+      weatherNow(city);
+      // Clear the search history
+      searchHistory.innerHTML = "";
+    }
   });
 
   // Display saved cities in the search history
@@ -174,24 +175,19 @@ function addedCity(city) {
     cityLocalStorage(cityName);
   }
 
-  cityBtn.addEventListener("click", function () {
-    weatherInfo(cityName);
-  });
-
+  cityBtn.addEventListener("click", () => weatherInfo(cityName));
   displayData();
 }
 
 // Get the current list of saved cities from local storage
 function findData() {
   const currentList = localStorage.getItem("city");
-  const newList = currentList !== null ? JSON.parse(currentList) : [];
-  return newList;
+  return currentList ? JSON.parse(currentList) : [];
 }
 
 // Add city to local storage
 function cityLocalStorage(city) {
   const addedList = findData();
-
   if (!addedList.includes(city)) {
     addedList.push(city);
   }
@@ -202,19 +198,10 @@ function cityLocalStorage(city) {
 function displayData() {
   const searchRecord = findData();
   let citiesHtml = "";
-
   if (searchRecord.length > 0) {
     citiesHtml = searchRecord.map((city) => `<button id="${city}" class="city-button">${city}</button>`).join("");
   }
-
   listCities.innerHTML = citiesHtml;
-
-  const cityButtons = document.querySelectorAll(".city-button");
-  cityButtons.forEach((button) => {
-    button.removeEventListener("click", cityButtonClickHandler);
-    button.addEventListener("click", cityButtonClickHandler);
-  });
-
   document.querySelector(".subheading").style.display = searchRecord.length > 0 ? "inline" : "none";
 }
 
@@ -226,26 +213,15 @@ function cityButtonClickHandler() {
 
 // Debounce search input
 let timeoutId;
-searchInput.addEventListener("input", function () {
+input.addEventListener("input", () => {
   clearTimeout(timeoutId);
   timeoutId = setTimeout(locationURL, 500);
 });
 
-// Add search term to search history
-function addToHistory(city) {
-  const li = document.createElement("li");
-  const button = document.createElement("button");
-  button.textContent = city.name;
-  button.dataset.city = JSON.stringify(city);
-  button.classList.add("search-history");
-  li.appendChild(button);
-  searchHistory.appendChild(li);
-}
-
 // Event listeners for search button
 document.getElementById("search-button").addEventListener("click", locationURL);
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
   const searchHistoryList = document.getElementById("search-history-list");
   searchHistoryList.innerHTML = "";
 
@@ -257,6 +233,9 @@ document.addEventListener("DOMContentLoaded", function () {
     searchHistoryList.appendChild(button);
   });
 });
+
+// Call init function when the page loads
+init();
 
 
 // attach a click event listener to the search history element
