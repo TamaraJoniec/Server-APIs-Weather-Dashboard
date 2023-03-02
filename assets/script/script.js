@@ -10,6 +10,8 @@ const historyList = document.getElementById("history-list");
 const searchInput = document.querySelector("#search-input");
 const searchResults = document.querySelector(".search-results");
 let listCities = document.querySelector(".list-cities");
+let clearHistoryButton = document.querySelector('#clear-history');
+
 
 function locationURL() {
     let initialSearch = document.querySelector("#search-input").value;
@@ -227,17 +229,9 @@ searchResults.addEventListener("click", function (event) {
 });
 
 // an event listener to the new button so that it clears the search history when clicked
-const clearHistoryButton = document.querySelector('#clear-history');
-
-if (localStorage.getItem('searchHistory')) {
-  clearHistoryButton.style.display = 'block';
-} else {
-  clearHistoryButton.style.display = 'none';
-}
-
 clearHistoryButton.addEventListener('click', () => {
-  localStorage.removeItem('searchHistory');
-  historyList.innerHTML = '';
-  clearHistoryButton.style.display = 'none';
-});
-
+    localStorage.removeItem('searchHistory');
+    historyList.innerHTML = '';
+    clearHistoryButton.style.display = 'none';
+  });
+  
