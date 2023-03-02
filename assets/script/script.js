@@ -225,3 +225,19 @@ searchResults.addEventListener("click", function (event) {
         searchResults.innerHTML = "";
     }
 });
+
+// an event listener to the new button so that it clears the search history when clicked
+const clearHistoryButton = document.querySelector('#clear-history');
+
+if (localStorage.getItem('searchHistory')) {
+  clearHistoryButton.style.display = 'block';
+} else {
+  clearHistoryButton.style.display = 'none';
+}
+
+clearHistoryButton.addEventListener('click', () => {
+  localStorage.removeItem('searchHistory');
+  historyList.innerHTML = '';
+  clearHistoryButton.style.display = 'none';
+});
+
