@@ -128,12 +128,12 @@ function init() {
         input.value = query;
       });
     }
-
+  
     // Display saved cities in the search history
     displayData();
-};
-
-function addedCity(city) {
+  }
+  
+  function addedCity(city) {
     const newList = findData();
     const cityName = city.name;
     const cityBtn = document.createElement("button"); // create a button element
@@ -155,26 +155,26 @@ function addedCity(city) {
     displayData();
   };
   
-
-// Get the current list of saved cities from local storage
-function findData() {
+  
+  // Get the current list of saved cities from local storage
+  function findData() {
     const currentList = localStorage.getItem("city");
     const newList = currentList !== null ? JSON.parse(currentList) : [];
     return newList;
-};
-
-// Add city to local storage
-function cityLocalStorage(city) {
+  };
+  
+  // Add city to local storage
+  function cityLocalStorage(city) {
     const addedList = findData();
-
+  
     if (!addedList.includes(city)) {
-        addedList.push(city);
+      addedList.push(city);
     }
     localStorage.setItem("city", JSON.stringify(addedList));
-};
-
-// Function for displaying cities in the search history
-function displayData() {
+  };
+  
+  // Function for displaying cities in the search history
+  function displayData() {
     const searchRecord = findData();
     let citiesHtml = "";
   
@@ -195,8 +195,7 @@ function displayData() {
     // add a click event listener to each button
     for (let i = 0; i < cityButtons.length; i++) {
       cityButtons[i].addEventListener("click", cityButtonClickHandler);
-    }
-  
+    }  
     document.querySelector(".subheading").setAttribute("style", "display:inline");
   };
 
@@ -215,17 +214,16 @@ searchInput.addEventListener("input", function () {
 
 // Add the search term to the search history
 function addToHistory(searchTerm) {
-    // Get the existing search history
+    // Get the existing search history or initialize it to an empty array if it doesn't exist
     var searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
+  
     // Add the new search term to the search history
     searchHistory.push(searchTerm);
-    // Save the updated search history to local storage
+  
+    // Save the updated search history in local storage
     localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
-    // Display the updated search history
-    displaySearchHistory(searchHistory);
-    // Add the city to the saved cities list
-    addedCity(searchTerm);
   }
+  
   
 
 //Event listeners for search button
