@@ -135,24 +135,26 @@ function init() {
 
 function addedCity(city) {
     const newList = findData();
+    const cityName = city.name;
     const cityBtn = document.createElement("button"); // create a button element
-    cityBtn.setAttribute("id", city.name);
-    cityBtn.textContent = city.name;
+    cityBtn.setAttribute("id", cityName);
+    cityBtn.textContent = cityName;
     cityBtn.classList.add("h5");
-
-    if (!newList.includes(city.name)) {
-        listCities.appendChild(cityBtn);
-        cityLocalStorage(city.name); // calling cityLocalStorage
+  
+    if (!newList.includes(cityName)) {
+      listCities.appendChild(cityBtn);
+      cityLocalStorage(cityName); // calling cityLocalStorage
     }
-
+  
     // add a click event listener to the button
-    cityBtn.addEventListener('click', function () {
-        weatherInfo(city.name); // reload the page with the corresponding city's weather forecast
+    cityBtn.addEventListener("click", function () {
+      weatherInfo(cityName); // reload the page with the corresponding city's weather forecast
     });
-
+  
     // Display saved cities in the search history
     displayData();
-};
+  };
+  
 
 // Get the current list of saved cities from local storage
 function findData() {
@@ -175,24 +177,34 @@ function cityLocalStorage(city) {
 function displayData() {
     const searchRecord = findData();
     let citiesHtml = "";
-
-    for (let i = 0; i < searchRecord.length; i++) {
+  
+    if (searchRecord.length > 0) {
+      for (let i = 0; i < searchRecord.length; i++) {
         citiesHtml += `<button id="${searchRecord[i]}" class="city-button">${searchRecord[i]}</button>`;
+      }
     }
-
+  
     listCities.innerHTML = citiesHtml;
-
-    // add a click event listener to each button
+  
+    // remove existing event listeners from city buttons
     const cityButtons = document.querySelectorAll(".city-button");
     for (let i = 0; i < cityButtons.length; i++) {
-        cityButtons[i].addEventListener("click", function () {
-            weatherInfo(this.id); // reload the page with the corresponding city's weather forecast
-        });
+      cityButtons[i].removeEventListener("click", cityButtonClickHandler);
     }
-
+  
+    // add a click event listener to each button
+    for (let i = 0; i < cityButtons.length; i++) {
+      cityButtons[i].addEventListener("click", cityButtonClickHandler);
+    }
+  
     document.querySelector(".subheading").setAttribute("style", "display:inline");
-};
+  };
 
+  function cityButtonClickHandler() {
+    const city = this.id;
+    weatherInfo(city); // reload the page with the corresponding city's weather forecast
+  }
+    
 
 // debounce the search input
 let timeoutId;
@@ -207,8 +219,14 @@ function addToHistory(searchTerm) {
     var searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
     // Add the new search term to the search history
     searchHistory.push(searchTerm);
-
-}
+    // Save the updated search history to local storage
+    localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+    // Display the updated search history
+    displaySearchHistory(searchHistory);
+    // Add the city to the saved cities list
+    addedCity(searchTerm);
+  }
+  
 
 //Event listeners for search button
 document.getElementById("search-button").addEventListener('click', locationURL);
