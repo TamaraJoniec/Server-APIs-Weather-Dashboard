@@ -6,11 +6,10 @@ let icon = document.getElementById("weather-icon");
 let temperature = document.getElementById("temperature");
 let humidity = document.getElementById("humidity");
 let wind = document.getElementById("wind");
-const listCities = document.querySelector(".list-cities");
 const historyList = document.getElementById("history-list");
 const searchInput = document.querySelector("#search-input");
 const searchResults = document.querySelector(".search-results");
-
+let listCities = document.querySelector(".list-cities");
 
 function locationURL() {
     let initialSearch = document.querySelector("#search-input").value;
@@ -108,33 +107,29 @@ function weatherInfo(city) {
 function init() {
     const form = document.querySelector('#search-form');
     form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const input = document.querySelector('#search-input');
-        const query = input.value;
-        weatherInfo(query);
-        input.value = '';
+      event.preventDefault();
+      locationURL();
+      const input = document.querySelector('#search-input');
+      input.value = '';
     });
-
-
+  
     // get the search history list and list items
     const searchHistoryList = document.getElementById('search-history');
     const searchHistoryItems = searchHistoryList.getElementsByTagName('button');
-
-    // add a click event listener to each list item
+  
+    // add a click event listener to each search history item
     for (let i = 0; i < searchHistoryItems.length; i++) {
-        searchHistoryItems[i].addEventListener('click', function () {
-            // get the text content of the clicked button
-            const city = this.textContent;
-
-            // reload the page with the corresponding city's weather forecast
-            weatherInfo(city);
-        });
+      searchHistoryItems[i].addEventListener('click', (event) => {
+        const query = event.target.textContent;
+        locationURL();
+        const input = document.querySelector('#search-input');
+        input.value = query;
+      });
     }
 
     // Display saved cities in the search history
     displayData();
 };
-
 
 function addedCity(city) {
     const newList = findData();
@@ -177,7 +172,6 @@ function cityLocalStorage(city) {
 // Function for displaying cities in the search history
 function displayData() {
     const searchRecord = findData();
-    const listCities = document.querySelector(".list-cities");
     let citiesHtml = "";
 
     for (let i = 0; i < searchRecord.length; i++) {
