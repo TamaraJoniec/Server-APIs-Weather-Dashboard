@@ -29,7 +29,9 @@ SO THAT I can plan a trip accordingly
     * The humidity
   * When a user click on a city in the search history they are again presented with current and future conditions for that city
 
-## Mock-Up
+## Design
+
+* Mobile first design, responsive to all screen sizes. 
 
 The following image shows the web application's appearance and functionality:
 
