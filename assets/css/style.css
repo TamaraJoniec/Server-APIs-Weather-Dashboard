@@ -16,7 +16,12 @@ body {
   font-family: 'Roboto', sans-serif;
   padding: 10px;
 }
-
+.message {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 1rem 0;
+}
 .weather-info {
   display: flex;
   justify-content: space-between;
