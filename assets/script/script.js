@@ -123,7 +123,7 @@ function addedCity(city) {
     if (!history.includes(city.name)) {
       history.push(city.name);
       localStorage.setItem("city", JSON.stringify(history));
-    }
+    } 
   
     historyList.textContent = city.name;
     historyList.classList.add("city-button");
