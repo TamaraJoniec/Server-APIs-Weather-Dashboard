@@ -59,40 +59,42 @@
   <!-- Script file -->
   <script src="./assets/script/script.js"></script>
   <script>
-    // Call the getCurrentPosition function when the page loads
+    // Add an event listener for the "load" event on the window object
     window.addEventListener("load", function () {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(success);
-      } else {
-        console.log("Geolocation is not supported by this browser.");
-      }
+      // Call the function that retrieves the weather data for the user's location
+      getLocationWeather();
     });
 
-    function success(position) {
-      const latitude = position.coords.latitude;
-      const longitude = position.coords.longitude;
-      console.log(latitude, longitude);
+    function getLocationWeather() {
+  // Use the Geolocation API to get the user's latitude and longitude coordinates
+  navigator.geolocation.getCurrentPosition(function (position) {
+    // Build the URL to get the weather data for the user's location
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&appid=bd4f86e586f7c181c1e585358d3c507c`;
 
-      // Call weather API here and pass the latitude and longitude values to get the weather information for the user's current location
-      const apiKey = "bd4f86e586f7c181c1e585358d3c507c";
-      const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+    // Fetch the weather data for the user's location
+    fetch(url)
+      .then(response => response.json())
+      .then(city => {
+        // Call the functions to display the weather data for the user's location
+        weatherNow(city);
+        weatherInfo(city);
 
-      fetch(apiUrl)
-        .then(response => {
-          return response.json();
-        })
-        .then(data => {
-          console.log(data);
-          const weatherInfo = document.getElementById("weather-info");
-          const city = data.name;
-          const temperature = data.main.temp;
-          const description = data.weather[0].description;
-          weatherInfo.innerHTML = `<p>Current weather in ${city}: ${temperature}°C and ${description}</p>`;
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
+        // Call the function to display the five-day forecast for the user's location
+        const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&appid=bd4f86e586f7c181c1e585358d3c507c`;
+        fetch(forecastUrl)
+          .then(response => response.json())
+          .then(city => fiveDayForecast(city))
+          .catch(error => console.error(error));
+      })
+      .catch(error => console.error(error));
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  getLocationWeather();
+});
+
+
   </script>
 </body>
 
