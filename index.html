@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <link rel="stylesheet" href="./assets/css/style.css" />
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
     integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
@@ -21,7 +21,7 @@
   <!-- Centered the search container using flexbox -->
   <main>
     <div id="weather-info">
-      <div class="message">Please search for a city to get the five-day weather forecast.</div>
+      <div class="message col-12 d-flex justify-content-center">Please search for a city to get the five-day weather forecast.</div>
     </div>
     <div class="search-container">
       <div class="input-group">
@@ -29,18 +29,19 @@
         <button id="search-button">Search</button>
       </div>
     </div>
-    <!-- search history list -->
-    <div id="search-history" class="hidden list-cities history mt-4">
-      <p class="previous-searches">Previous Searches</p>
-      <ul id="search-history-list">
-      </ul>
-    </div>
+
     <!-- Five day -->
     <div>
       <h3 class="col d-flex justify-content-center subheading"></h3>
       <div class="col d-flex justify-content-center" id="forecast-container"></div>
       <img id="icon">
     </div>
+      <!-- search history list -->
+      <div id="search-history" class="hidden list-cities history col-lg-4 col-md-6 col-sm-12">
+        <p class="previous-searches">Previous Searches</p>
+        <ul id="search-history-list">
+        </ul>
+      </div>
   </main>
   <!-- Moment.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
@@ -48,6 +49,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <!-- Script file -->
   <script src="./assets/script/script.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+  <!-- As the page loads for the first time -->
   <script>
     // Add an event listener for the "load" event on the window object
     window.addEventListener("load", function () {
@@ -95,9 +99,9 @@
     });
 
     window.addEventListener('DOMContentLoaded', () => {
-        findData();
-      });
-      
+      findData();
+    });
+
   </script>
 </body>
 
