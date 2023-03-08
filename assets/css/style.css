@@ -191,6 +191,13 @@ button:hover {
   align-items: center;
   margin-top: 50px;
 }
+
+.search-label {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #555;
+  text-transform: uppercase;
+}
 /* Increased the font size of the input box and added a bit of padding for more breathing room. */
 label {
   font-size: 1.2rem;
