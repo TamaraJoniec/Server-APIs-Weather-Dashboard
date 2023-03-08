@@ -31,7 +31,7 @@
     </div>
     <!-- search history list -->
     <div id="search-history" class="hidden list-cities history mt-4">
-      <h5>Search History</h5>
+      <p class="previous-searches">Previous Searches</p>
       <ul id="search-history-list">
       </ul>
     </div>
@@ -93,23 +93,7 @@
         searchHistory.classList.remove('hidden');
       }
     });
-    function findData() {
-      const previousSearches = JSON.parse(localStorage.getItem('city')) || [];
-      const previousSearchesContainer = document.getElementById('previous-searches');
 
-      previousSearchesContainer.innerHTML = '';
-
-      previousSearches.forEach(search => {
-        const button = document.createElement('button');
-        button.textContent = search;
-        button.addEventListener('click', () => {
-          // Code to display weather information for the selected search
-        });
-        previousSearchesContainer.appendChild(button);
-      });
-
-      return previousSearches;
-    }
     window.addEventListener('DOMContentLoaded', () => {
         findData();
       });

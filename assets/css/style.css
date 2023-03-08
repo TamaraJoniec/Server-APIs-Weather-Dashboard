@@ -64,53 +64,41 @@ h4 {
   color: white;
 }
 
-h5 {
-  color: #284774;
-}
-
-.subheading {
+.previous-searches {
+  color: #284774;  
   font-weight: 700;
   line-height: 1.25;
 }
 
 /* list of clickable searches */
-.list-cities {
+#search-history {
   position: absolute;
   top: 50px;
-  right: 10px;
-  background-color: rgba(255, 255, 255, 0.639);
+  left: 10px;
+}
+.list-cities {
+  background-color: rgb(255, 255, 255);
   padding: 10px;
   border-radius: 10px;
   color: #333;
   width: 200px;
   max-height: 300px;
   overflow-y: auto;
+  margin: 2;
 }
-
-.list-cities ul {
-  margin: 0;
-  padding: 0;
-  margin-top: 20px;
-}
-
-.list-cities ul li {
-  list-style-type: none;
-  margin-bottom: 5px;
-}
-
-.list-cities ul li button {
-  border: none;
-  background: none;
+.list-cities button {
+  display: inline-block;
+  margin: 5px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
   color: #333;
-  text-align: left;
-  width: 100%;
-  padding: 0;
-}
-
-.list-cities ul li button:hover {
-  text-decoration: underline;
+  font-size: 16px;
+  font-weight: bold;
   cursor: pointer;
 }
+
 .hidden {
   display: none;
 }

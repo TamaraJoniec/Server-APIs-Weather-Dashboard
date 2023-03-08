@@ -1,6 +1,5 @@
 let dt = 0;
-let cityFind = 0;
-let newList;
+let history;
 let cityTitle = document.getElementById("city-title");
 let icon = document.getElementById("weather-icon");
 let temperature = document.getElementById("temperature");
@@ -25,20 +24,20 @@ function locationURL() {
             weatherNow(city);
         });
 }
-  
+
 function weatherNow(city) {
     const apiKey = "bd4f86e586f7c181c1e585358d3c507c";
     const currentWeatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${city.name}&units=metric&appid=${apiKey}`;
-  
+
     fetch(currentWeatherURL)
-      .then(response => response.json())
-      .then(data => {
-        const currentWeatherElement = document.getElementById("current-weather");
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        const iconCode = data.weather[0].icon;
-        const iconUrl = `http://openweathermap.org/img/w/${iconCode}.png`;
-        
-        currentWeatherElement.innerHTML = `
+        .then(response => response.json())
+        .then(data => {
+            const currentWeatherElement = document.getElementById("current-weather");
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const iconCode = data.weather[0].icon;
+            const iconUrl = `http://openweathermap.org/img/w/${iconCode}.png`;
+
+            currentWeatherElement.innerHTML = `
           <div>
             <h2>Current Weather in ${city.name}</h2>
             <p>${data.weather[0].description}</p>
@@ -50,15 +49,15 @@ function weatherNow(city) {
             <p>${new Date(data.dt * 1000).toLocaleDateString('en-GB', options)}</p>
           </div>
         `;
-        
-  
-        // Set the background image based on the current weather
-        const background = document.querySelector("body");
-        const backgroundImageURL = `url('https://source.unsplash.com/1600x900/?${data.weather[0].main}')`;
-        background.style.backgroundImage = backgroundImageURL;
-      });
-  }
-  
+
+
+            // Set the background image based on the current weather
+            const background = document.querySelector("body");
+            const backgroundImageURL = `url('https://source.unsplash.com/1600x900/?${data.weather[0].main}')`;
+            background.style.backgroundImage = backgroundImageURL;
+        });
+}
+
 
 // Five day weather forecast
 
@@ -89,11 +88,11 @@ function weatherInfo(city) {
                 const forecastHumidity = document.createElement("div");
 
                 forecastIcon.setAttribute("src", `https://openweathermap.org/img/wn/${data.list[i].weather[0].icon}.png`);
-                const celsiusTemp = (data.list[i].main.temp - 32) * 5/9; // convert temperature to Celsius
+                const celsiusTemp = (data.list[i].main.temp - 32) * 5 / 9; // convert temperature to Celsius
                 forecastTemp.textContent = `Temperature: ${celsiusTemp.toFixed(1)} °C`;
                 forecastWind.textContent = `Wind: ${data.list[i].wind.speed} MPH`;
                 forecastHumidity.textContent = `Humidity: ${data.list[i].main.humidity} %`;
-                
+
                 weatherCard.appendChild(forecastIcon);
                 weatherCard.appendChild(forecastTemp);
                 weatherCard.appendChild(forecastWind);
@@ -116,26 +115,32 @@ function init() {
         input.value = '';
     });
 }
-
+// Adds the city to the search list, and makes them into buttons.
 function addedCity(city) {
-    const newList = findData();
-    const cityFind = document.createElement("div");
-    cityFind.setAttribute("id", city.name);
-    cityFind.textContent = city.name;
-    cityFind.classList.add("h5");
-
-    if (!newList.includes(city.name)) {
-        listCities.appendChild(cityFind);
+    const history = findData();
+    const historyList = document.createElement("button");
+    
+    if (!history.includes(city.name)) {
+      history.push(city.name);
+      localStorage.setItem("city", JSON.stringify(history));
     }
-
-    document.querySelector(".subheading").setAttribute("style", "display:inline");
-
+  
+    historyList.textContent = city.name;
+    historyList.classList.add("city-button");
+    historyList.onclick = function () {
+      weatherNow(city);
+      weatherInfo(city);
+    };
+  
+    listCities.appendChild(historyList);
+  
     function findData() {
-        const currentList = localStorage.getItem("city");
-        const newList = currentList !== null ? JSON.parse(currentList) : [];
-        return newList;
-    }
-};
+      const currentList = localStorage.getItem("city");
+      const history = currentList !== null ? JSON.parse(currentList) : [];
+      return history;
+    } 
+  };
+  
 // adding city to local storage
 function cityLocalStorage(city) {
     const addedList = findData();
@@ -146,18 +151,7 @@ function cityLocalStorage(city) {
 
     localStorage.setItem("city", JSON.stringify(addedList));
 }
-// Function for displaying cities
-function displayData() {
-    const searchRecord = findData();
-    const listCities = document.querySelector(".list-cities");
-    let citiesHtml = "";
 
-    for (let i = 0; i < searchRecord.length; i++) {
-        citiesHtml += `<button id="${searchRecord[i].name}" class="city-button">${searchRecord[i].name}</button>`;
-    }
-
-    listCities.innerHTML = citiesHtml;
-}
 // Add the search term to the search history
 function addToHistory(city) {
     // Get the existing search history
@@ -165,7 +159,6 @@ function addToHistory(city) {
     // Add the new search term to the search history
     searchHistory.push(city);
 }
-
 //Event listeners for search button
 document.getElementById("search-button").addEventListener('click', locationURL);
 
@@ -185,14 +178,3 @@ searchHistoryItem.addEventListener("click", function (event) {
 });
 
 
-// Listen for the search input to change
-searchInput.addEventListener('input', function() {
-  // Get the search value
-  const searchValue = searchInput.value.trim();
-
-  // If the search value is not empty, show the search history component
-  if (searchValue !== '') {
-    const searchHistory = document.getElementById('search-history');
-    searchHistory.classList.remove('hidden');
-  }
-});
