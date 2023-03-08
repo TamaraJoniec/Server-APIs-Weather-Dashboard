@@ -18,40 +18,25 @@
     <h1 id="page-title">Weather Dashboard</h1>
   </header>
   <div id="current-weather"></div>
-
+<!-- Centered the search container using flexbox -->
   <main>
     <div id="weather-info">
-      <h2>Current Weather</h2>
-      <div class="message">Please search for a city to get the current weather.</div>
+      <div class="message">Please search for a city to get the five-day weather forecast.</div>
     </div>
-    <section class="flex-row justify-space-between">
-      <!-- search title -->
-      <aside class="col-lg-3 pb-3">
-        <!-- search form -->
+    <div class="search-container">
+      <label for="search-input">Search for a city:</label>
+      <div class="input-group">
         <input type="text" id="search-input" placeholder="London" />
-        <!-- search button -->
-        <button type="submit" class="button search-button" id="search-button" aria-label="submit search">Search</button>
-        <!-- search history list -->
-        <div id="search-history" class="list-cities history mt-4">
-          <h5>Search History</h5>
-          <ul id="search-history">
-            <ul>
-              <li id="buttons-view"></li>
-            </ul>
-          </ul>
-
-        </div>
-      </aside>
-    </section>
-
+        <button id="search-button">Search</button>
+      </div>
+    </div>
     <!-- Five day -->
     <div>
-      <h3 class="col d-flex justify-content-center subheading">Five-Day Weather Forecast</h3>
+      <h3 class="col d-flex justify-content-center subheading"></h3>
       <div class="col d-flex justify-content-center" id="forecast-container"></div>
       <img id="icon">
     </div>
   </main>
-
   <!-- Moment.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
   <!-- jQuery -->
@@ -66,33 +51,33 @@
     });
 
     function getLocationWeather() {
-  // Use the Geolocation API to get the user's latitude and longitude coordinates
-  navigator.geolocation.getCurrentPosition(function (position) {
-    // Build the URL to get the weather data for the user's location
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&appid=bd4f86e586f7c181c1e585358d3c507c`;
+      // Use the Geolocation API to get the user's latitude and longitude coordinates
+      navigator.geolocation.getCurrentPosition(function (position) {
+        // Build the URL to get the weather data for the user's location
+        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&appid=bd4f86e586f7c181c1e585358d3c507c`;
 
-    // Fetch the weather data for the user's location
-    fetch(url)
-      .then(response => response.json())
-      .then(city => {
-        // Call the functions to display the weather data for the user's location
-        weatherNow(city);
-        weatherInfo(city);
-
-        // Call the function to display the five-day forecast for the user's location
-        const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&appid=bd4f86e586f7c181c1e585358d3c507c`;
-        fetch(forecastUrl)
+        // Fetch the weather data for the user's location
+        fetch(url)
           .then(response => response.json())
-          .then(city => fiveDayForecast(city))
-          .catch(error => console.error(error));
-      })
-      .catch(error => console.error(error));
-  });
-}
+          .then(city => {
+            // Call the functions to display the weather data for the user's location
+            weatherNow(city);
+            weatherInfo(city);
 
-document.addEventListener('DOMContentLoaded', function() {
-  getLocationWeather();
-});
+            // Call the function to display the five-day forecast for the user's location
+            const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&appid=bd4f86e586f7c181c1e585358d3c507c`;
+            fetch(forecastUrl)
+              .then(response => response.json())
+              .then(city => fiveDayForecast(city))
+              .catch(error => console.error(error));
+          })
+          .catch(error => console.error(error));
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      getLocationWeather();
+    });
 
 
   </script>

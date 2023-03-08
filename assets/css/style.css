@@ -17,11 +17,30 @@ body {
   padding: 10px;
 }
 .message {
-  font-size: 1.2rem;
+  font-size: 2rem;
   font-weight: bold;
   text-align: center;
-  margin: 1rem 0;
+  margin: 2rem 0;
+  color: #fff;
+  text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
 }
+
+.message::before,
+.message::after {
+  content: "";
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: #fff;
+  margin: 0 1rem;
+  transform: translateY(0.5rem);
+  border-radius: 50%;
+}
+
+.message::before {
+  transform: translateY(-0.5rem);
+}
+
 .weather-info {
   display: flex;
   justify-content: space-between;
@@ -165,26 +184,55 @@ button:hover {
 .forecast-card div:not(.day-of-week) {
   margin-bottom: 5px;
 }
-
-.search-input {
-  margin-bottom: 20px;
-  background-color: rgba(255, 255, 255, 0.5);
-  border: none;
+/* Increased the font size of the label and added a bit of margin below it for better readability */
+.search-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+}
+/* Increased the font size of the input box and added a bit of padding for more breathing room. */
+label {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #555;
+}
+/* Centered the input box and search button inside an input-group container using flexbox. */
+.input-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+}
+/* Added some other minor tweaks to make the styles more consistent and polished. */
+#search-input {
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 1.2rem;
+  width: 100%;
+  max-width: 400px;
 }
 
+#search-input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+/* Changed the background color of the search button to blue and added some hover effects to make it more noticeable and clickable. */
 #search-button {
-  background-color: transparent;
+  background-color: #007bff;
+  color: #fff;
   border: none;
-  border-radius: 5px;
-  color: white;
+  border-radius: 4px;
+  padding: 10px 20px;
+  margin-left: 10px;
+  font-size: 1.2rem;
   cursor: pointer;
-  font-size: 1em;
-  padding: 10px;
-  transition: all 0.2s ease;
 }
 
 #search-button:hover {
-  color: orange;
+  background-color: #0056b3;
 }
 
 .big {
