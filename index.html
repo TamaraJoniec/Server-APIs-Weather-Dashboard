@@ -32,10 +32,7 @@
     <!-- search history list -->
     <div id="search-history" class="hidden list-cities history mt-4">
       <h5>Search History</h5>
-      <ul id="search-history">
-        <ul>
-          <li id="buttons-view"></li>
-        </ul>
+      <ul id="search-history-list">
       </ul>
     </div>
     <!-- Five day -->
@@ -76,13 +73,12 @@
             const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&appid=bd4f86e586f7c181c1e585358d3c507c`;
             fetch(forecastUrl)
               .then(response => response.json())
-              .then(city => fiveDayForecast(city))
+              .then(city => weatherInfo(city))
               .catch(error => console.error(error));
           })
           .catch(error => console.error(error));
       });
     }
-
     document.addEventListener('DOMContentLoaded', function () {
       getLocationWeather();
     });
@@ -97,6 +93,27 @@
         searchHistory.classList.remove('hidden');
       }
     });
+    function findData() {
+      const previousSearches = JSON.parse(localStorage.getItem('city')) || [];
+      const previousSearchesContainer = document.getElementById('previous-searches');
+
+      previousSearchesContainer.innerHTML = '';
+
+      previousSearches.forEach(search => {
+        const button = document.createElement('button');
+        button.textContent = search;
+        button.addEventListener('click', () => {
+          // Code to display weather information for the selected search
+        });
+        previousSearchesContainer.appendChild(button);
+      });
+
+      return previousSearches;
+    }
+    window.addEventListener('DOMContentLoaded', () => {
+        findData();
+      });
+      
   </script>
 </body>
 

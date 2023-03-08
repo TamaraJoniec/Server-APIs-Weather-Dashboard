@@ -65,7 +65,7 @@ h4 {
 }
 
 h5 {
-  color: #83a4d4;
+  color: #284774;
 }
 
 .subheading {
@@ -73,14 +73,18 @@ h5 {
   line-height: 1.25;
 }
 
+/* list of clickable searches */
 .list-cities {
-  background-color: rgba(255, 255, 255, 0.8);
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.639);
   padding: 10px;
   border-radius: 10px;
   color: #333;
-}
-.hidden {
-  display: none;
+  width: 200px;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 .list-cities ul {
@@ -94,22 +98,21 @@ h5 {
   margin-bottom: 5px;
 }
 
-button {
-  display: inline;
-  margin: 10px 0;
-  padding: 10px 20px;
+.list-cities ul li button {
   border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  font-weight: bold;
-  color: #fff;
-  background-color: #333;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
+  background: none;
+  color: #333;
+  text-align: left;
+  width: 100%;
+  padding: 0;
 }
 
-button:hover {
-  background-color: #444;
+.list-cities ul li button:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.hidden {
+  display: none;
 }
 
 /* Style for the city and current weather information */

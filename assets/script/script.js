@@ -10,7 +10,7 @@ const listCities = document.querySelector(".list-cities");
 const historyList = document.getElementById("history-list");
 const searchInput = document.querySelector("#search-input");
 const searchResults = document.querySelector(".search-results");
-
+const searchHistoryItem = document.getElementById('search-history-list');
 
 function locationURL() {
     let initialSearch = document.querySelector("#search-input").value;
@@ -158,44 +158,21 @@ function displayData() {
 
     listCities.innerHTML = citiesHtml;
 }
-
-// // debounce the search input
-// let timeoutId;
-// searchInput.addEventListener("input", function () {
-//     clearTimeout(timeoutId);
-//     timeoutId = setTimeout(locationURL, 500);
-// });
-
 // Add the search term to the search history
-function addToHistory(searchTerm) {
+function addToHistory(city) {
     // Get the existing search history
     var searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
     // Add the new search term to the search history
-    searchHistory.push(searchTerm);
-}
-
-// get the search history list and list items
-const searchHistoryList = document.getElementById('search-history');
-const searchHistoryItems = searchHistoryList.getElementsByTagName('button');
-
-// add a click event listener to each list item
-for (let i = 0; i < searchHistoryItems.length; i++) {
-  searchHistoryItems[i].addEventListener('click', function() {
-    // get the text content of the clicked button
-    const city = this.textContent;
-    
-    // reload the page with the corresponding city's weather forecast
-    window.location.href = `https://example.com/weather?city=${city}`;
-  });
+    searchHistory.push(city);
 }
 
 //Event listeners for search button
 document.getElementById("search-button").addEventListener('click', locationURL);
 
 // attach a click event listener to the parent element
-searchResults.addEventListener("click", function (event) {
+searchHistoryItem.addEventListener("click", function (event) {
     // check if the click event was triggered by a search result
-    if (event.target.classList.contains("search-result")) {
+    if (event.target.classList.contains("search-history-list")) {
         // get the city object from the data attribute of the search result
         const city = JSON.parse(event.target.dataset.city);
         // update the weather information for the selected city
@@ -203,7 +180,19 @@ searchResults.addEventListener("click", function (event) {
         addedCity(city);
         weatherNow(city);
         // clear the search results
-        searchResults.innerHTML = "";
+        searchHistoryItem.innerHTML = "";
     }
 });
 
+
+// Listen for the search input to change
+searchInput.addEventListener('input', function() {
+  // Get the search value
+  const searchValue = searchInput.value.trim();
+
+  // If the search value is not empty, show the search history component
+  if (searchValue !== '') {
+    const searchHistory = document.getElementById('search-history');
+    searchHistory.classList.remove('hidden');
+  }
+});
