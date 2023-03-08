@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
     integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <title>Weather Dashboard</title>
 </head>
 
@@ -19,6 +20,10 @@
   <div id="current-weather"></div>
 
   <main>
+    <div id="weather-info">
+      <h2>Current Weather</h2>
+      <p>Please search for a city to get the current weather.</p>
+    </div>
     <section class="flex-row justify-space-between">
       <!-- search title -->
       <aside class="col-lg-3 pb-3">
@@ -34,11 +39,11 @@
               <li id="buttons-view"></li>
             </ul>
           </ul>
-          
+
         </div>
       </aside>
     </section>
-  
+
     <!-- Five day -->
     <div>
       <h3 class="col d-flex justify-content-center subheading">Five-Day Weather Forecast</h3>
@@ -53,6 +58,42 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <!-- Script file -->
   <script src="./assets/script/script.js"></script>
+  <script>
+    // Call the getCurrentPosition function when the page loads
+    window.addEventListener("load", function () {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success);
+      } else {
+        console.log("Geolocation is not supported by this browser.");
+      }
+    });
+
+    function success(position) {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      console.log(latitude, longitude);
+
+      // Call weather API here and pass the latitude and longitude values to get the weather information for the user's current location
+      const apiKey = "bd4f86e586f7c181c1e585358d3c507c";
+      const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+
+      fetch(apiUrl)
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          console.log(data);
+          const weatherInfo = document.getElementById("weather-info");
+          const city = data.name;
+          const temperature = data.main.temp;
+          const description = data.weather[0].description;
+          weatherInfo.innerHTML = `<p>Current weather in ${city}: ${temperature}°C and ${description}</p>`;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  </script>
 </body>
 
 </html>

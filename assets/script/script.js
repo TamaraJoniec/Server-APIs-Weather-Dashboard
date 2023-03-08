@@ -25,7 +25,7 @@ function locationURL() {
             weatherNow(city);
         });
 }
-
+  
 function weatherNow(city) {
     const apiKey = "bd4f86e586f7c181c1e585358d3c507c";
     const currentWeatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${city.name}&units=metric&appid=${apiKey}`;
