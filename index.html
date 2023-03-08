@@ -18,17 +18,25 @@
     <h1 id="page-title">Weather Dashboard</h1>
   </header>
   <div id="current-weather"></div>
-<!-- Centered the search container using flexbox -->
+  <!-- Centered the search container using flexbox -->
   <main>
     <div id="weather-info">
       <div class="message">Please search for a city to get the five-day weather forecast.</div>
     </div>
     <div class="search-container">
-      <label for="search-input" class="search-label">Search for a city:</label>
       <div class="input-group">
-        <input type="text" id="search-input" placeholder="London" />
+        <input type="text" id="search-input" placeholder="Enter city name" />
         <button id="search-button">Search</button>
       </div>
+    </div>
+    <!-- search history list -->
+    <div id="search-history" class="hidden list-cities history mt-4">
+      <h5>Search History</h5>
+      <ul id="search-history">
+        <ul>
+          <li id="buttons-view"></li>
+        </ul>
+      </ul>
     </div>
     <!-- Five day -->
     <div>
@@ -78,8 +86,17 @@
     document.addEventListener('DOMContentLoaded', function () {
       getLocationWeather();
     });
+    // Listen for the search input to change
+    searchInput.addEventListener('input', function () {
+      // Get the search value
+      const searchValue = searchInput.value.trim();
 
-
+      // If the search value is not empty, show the search history component
+      if (searchValue !== '') {
+        const searchHistory = document.getElementById('search-history');
+        searchHistory.classList.remove('hidden');
+      }
+    });
   </script>
 </body>
 

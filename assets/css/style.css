@@ -9,10 +9,6 @@
 
 body {
   color: #ffffff;
-  background-color: rgba(0, 0, 0, 0.5);
-  /* background-image: url("https://i.imgur.com/mQsmtaT.jpg");
-  background-repeat: no-repeat;
-  background-size: cover; */
   font-family: 'Roboto', sans-serif;
   padding: 10px;
 }
@@ -82,6 +78,9 @@ h5 {
   padding: 10px;
   border-radius: 10px;
   color: #333;
+}
+.hidden {
+  display: none;
 }
 
 .list-cities ul {
@@ -161,26 +160,23 @@ button:hover {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background-color: #fff;
+  background-color: #ffffffad;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   width: 200px;
   height: 250px;
   padding: 20px;
 }
-
-.day-of-week {
-  font-weight: bold;
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-
 .forecast-card img {
   width: 80px;
   height: 80px;
   margin-bottom: 10px;
 }
-
+.day-of-week {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
 .forecast-card div:not(.day-of-week) {
   margin-bottom: 5px;
 }
@@ -192,12 +188,6 @@ button:hover {
   margin-top: 50px;
 }
 
-.search-label {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-  color: #555;
-  text-transform: uppercase;
-}
 /* Increased the font size of the input box and added a bit of padding for more breathing room. */
 label {
   font-size: 1.2rem;

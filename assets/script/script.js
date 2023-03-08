@@ -159,12 +159,12 @@ function displayData() {
     listCities.innerHTML = citiesHtml;
 }
 
-// debounce the search input
-let timeoutId;
-searchInput.addEventListener("input", function () {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(locationURL, 500);
-});
+// // debounce the search input
+// let timeoutId;
+// searchInput.addEventListener("input", function () {
+//     clearTimeout(timeoutId);
+//     timeoutId = setTimeout(locationURL, 500);
+// });
 
 // Add the search term to the search history
 function addToHistory(searchTerm) {
@@ -206,3 +206,4 @@ searchResults.addEventListener("click", function (event) {
         searchResults.innerHTML = "";
     }
 });
+
