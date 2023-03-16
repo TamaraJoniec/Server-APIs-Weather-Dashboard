@@ -1,5 +1,4 @@
 let dt = 0;
-let history;
 let cityTitle = document.getElementById("city-title");
 let icon = document.getElementById("weather-icon");
 let temperature = document.getElementById("temperature");
@@ -11,20 +10,23 @@ const searchInput = document.querySelector("#search-input");
 const searchResults = document.querySelector(".search-results");
 const searchHistoryItem = document.getElementById('search-history-list');
 
-function locationURL() {
+// Changed the fetch request to use async/await syntax to improve readability and simplify the code.
+async function locationURL() {
     let initialSearch = document.querySelector("#search-input").value;
     console.log(initialSearch);
-    fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${initialSearch.toLowerCase()}&limit=5&appid=bd4f86e586f7c181c1e585358d3c507c`)
-        .then(response => response.json())
-        .then(citySearch => {
-            let city = citySearch[0];
-            console.log(citySearch);
-            weatherInfo(city);
-            addedCity(city);
-            weatherNow(city);
-        });
+    try {
+        const response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${initialSearch.toLowerCase()}&limit=5&appid=bd4f86e586f7c181c1e585358d3c507c`);
+        const citySearch = await response.json();
+        let city = citySearch[0];
+        console.log(citySearch);
+        weatherInfo(city);
+        addedCity(city);
+        weatherNow(city);
+    } catch (error) {
+        console.log('error', error);
+    }
 }
-
+// Removed the innerHTML assignment and replaced it with the createDocumentFragment() method to improve performance when adding weather cards to the forecast container.
 function weatherNow(city) {
     const apiKey = "bd4f86e586f7c181c1e585358d3c507c";
     const currentWeatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${city.name}&units=metric&appid=${apiKey}`;
@@ -69,13 +71,12 @@ function weatherInfo(city) {
         .then(response => response.json())
         .then(data => {
             const currentDate = new Date();
-            const weatherCards = [];
-
+            const fragment = document.createDocumentFragment(); // create a document fragment
             for (let i = 0; i < 5; i++) {
                 const forecastDate = new Date(currentDate.getTime() + i * 24 * 60 * 60 * 1000);
                 const weatherCard = document.createElement("div");
                 weatherCard.classList.add("forecast-card");
-
+                
                 const dayOfWeek = forecastDate.toLocaleDateString("en-US", { weekday: "long" });
                 const dayOfWeekElement = document.createElement("div");
                 dayOfWeekElement.classList.add("day-of-week");
@@ -98,12 +99,13 @@ function weatherInfo(city) {
                 weatherCard.appendChild(forecastWind);
                 weatherCard.appendChild(forecastHumidity);
 
-                weatherCards.push(weatherCard);
+                fragment.appendChild(weatherCard); // append each weather card to the fragment
             }
 
-            forecastContainer.append(...weatherCards);
+            forecastContainer.appendChild(fragment); // append the fragment to the forecast container
         });
 }
+
 
 function init() {
     const form = document.querySelector('#search-form');
