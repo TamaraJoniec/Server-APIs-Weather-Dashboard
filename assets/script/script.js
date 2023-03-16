@@ -1,9 +1,9 @@
-let dt = 0;
-let cityTitle = document.getElementById("city-title");
-let icon = document.getElementById("weather-icon");
-let temperature = document.getElementById("temperature");
-let humidity = document.getElementById("humidity");
-let wind = document.getElementById("wind");
+
+const cityTitle = document.getElementById("city-title");
+const icon = document.getElementById("weather-icon");
+const temperature = document.getElementById("temperature");
+const humidity = document.getElementById("humidity");
+const wind = document.getElementById("wind");
 const listCities = document.querySelector(".list-cities");
 const historyList = document.getElementById("history-list");
 const searchInput = document.querySelector("#search-input");
@@ -39,7 +39,9 @@ function weatherNow(city) {
             const iconCode = data.weather[0].icon;
             const iconUrl = `http://openweathermap.org/img/w/${iconCode}.png`;
 
-            currentWeatherElement.innerHTML = `
+            const fragment = document.createDocumentFragment();
+            const weatherElement = document.createElement('div');
+            weatherElement.innerHTML = `
           <div>
             <h2>Current Weather in ${city.name}</h2>
             <p>${data.weather[0].description}</p>
@@ -51,8 +53,6 @@ function weatherNow(city) {
             <p>${new Date(data.dt * 1000).toLocaleDateString('en-GB', options)}</p>
           </div>
         `;
-
-
             // Set the background image based on the current weather
             const background = document.querySelector("body");
             const backgroundImageURL = `url('https://source.unsplash.com/1600x900/?${data.weather[0].main}')`;
@@ -105,7 +105,6 @@ function weatherInfo(city) {
             forecastContainer.appendChild(fragment); // append the fragment to the forecast container
         });
 }
-
 
 function init() {
     const form = document.querySelector('#search-form');
