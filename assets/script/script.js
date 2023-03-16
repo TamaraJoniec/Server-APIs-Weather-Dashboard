@@ -9,19 +9,30 @@ const historyList = document.getElementById("history-list");
 const searchInput = document.querySelector("#search-input");
 const searchResults = document.querySelector(".search-results");
 const searchHistoryItem = document.getElementById('search-history-list');
+const apiKey = "bd4f86e586f7c181c1e585358d3c507c";
 
+let currentSearch = "";
+
+// Hide the loading message and spinner once the content has finished loading
+window.addEventListener('load', function() {
+    const loading = document.getElementById('loading');
+    loading.style.display = 'none';
+  });
+  
 // Changed the fetch request to use async/await syntax to improve readability and simplify the code.
 async function locationURL() {
-    let initialSearch = document.querySelector("#search-input").value;
-    console.log(initialSearch);
+    const search = document.querySelector("#search-input").value;
+    if (search === currentSearch) {
+        return;
+    }
+    currentSearch = search;
     try {
-        const response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${initialSearch.toLowerCase()}&limit=5&appid=bd4f86e586f7c181c1e585358d3c507c`);
+        const response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${search.toLowerCase()}&limit=5&appid=${apiKey}`);
         const citySearch = await response.json();
-        let city = citySearch[0];
-        console.log(citySearch);
+        const city = citySearch[0];
         weatherInfo(city);
         addedCity(city);
-        weatherNow(city);
+        await weatherNow(city);
     } catch (error) {
         console.log('error', error);
     }
@@ -39,20 +50,20 @@ function weatherNow(city) {
             const iconCode = data.weather[0].icon;
             const iconUrl = `http://openweathermap.org/img/w/${iconCode}.png`;
 
-            const fragment = document.createDocumentFragment();
-            const weatherElement = document.createElement('div');
-            weatherElement.innerHTML = `
+            currentWeatherElement.innerHTML = `
           <div>
             <h2>Current Weather in ${city.name}</h2>
             <p>${data.weather[0].description}</p>
             <img src="${iconUrl}" alt="${data.weather[0].description}">
-            <p>Temperature: ${data.main.temp} &#8451;</p>
-            <p>Feels Like: ${data.main.feels_like} &#8451;</p>
+            <p>Temperature: ${data.main.temp.toFixed(0)} &#8451;</p>
+            <p>Feels Like: ${data.main.feels_like.toFixed(0)} &#8451;</p>
             <p>Humidity: ${data.main.humidity}%</p>
-            <p>Wind: ${data.wind.speed} MPH</p>
+            <p>Wind: ${data.wind.speed.toFixed(0)} MPH</p>
             <p>${new Date(data.dt * 1000).toLocaleDateString('en-GB', options)}</p>
           </div>
         `;
+
+
             // Set the background image based on the current weather
             const background = document.querySelector("body");
             const backgroundImageURL = `url('https://source.unsplash.com/1600x900/?${data.weather[0].main}')`;
@@ -67,7 +78,7 @@ function weatherInfo(city) {
     const forecastContainer = document.getElementById("forecast-container");
     forecastContainer.innerHTML = ""; // clear old weather cards
 
-    fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&appid=bd4f86e586f7c181c1e585358d3c507c&units=imperial&cnt=40`)
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&appid=${apiKey}`)
         .then(response => response.json())
         .then(data => {
             const currentDate = new Date();
@@ -76,7 +87,7 @@ function weatherInfo(city) {
                 const forecastDate = new Date(currentDate.getTime() + i * 24 * 60 * 60 * 1000);
                 const weatherCard = document.createElement("div");
                 weatherCard.classList.add("forecast-card");
-                
+
                 const dayOfWeek = forecastDate.toLocaleDateString("en-US", { weekday: "long" });
                 const dayOfWeekElement = document.createElement("div");
                 dayOfWeekElement.classList.add("day-of-week");
@@ -90,8 +101,8 @@ function weatherInfo(city) {
 
                 forecastIcon.setAttribute("src", `https://openweathermap.org/img/wn/${data.list[i].weather[0].icon}.png`);
                 const celsiusTemp = (data.list[i].main.temp - 32) * 5 / 9; // convert temperature to Celsius
-                forecastTemp.textContent = `Temperature: ${celsiusTemp.toFixed(1)} °C`;
-                forecastWind.textContent = `Wind: ${data.list[i].wind.speed} MPH`;
+                forecastTemp.textContent = `Temperature: ${celsiusTemp.toFixed(0)} °C`;
+                forecastWind.textContent = `Wind: ${data.list[i].wind.speed.toFixed(0)} MPH`;
                 forecastHumidity.textContent = `Humidity: ${data.list[i].main.humidity} %`;
 
                 weatherCard.appendChild(forecastIcon);
@@ -105,6 +116,7 @@ function weatherInfo(city) {
             forecastContainer.appendChild(fragment); // append the fragment to the forecast container
         });
 }
+
 
 function init() {
     const form = document.querySelector('#search-form');
@@ -120,28 +132,28 @@ function init() {
 function addedCity(city) {
     const history = findData();
     const historyList = document.createElement("button");
-    
+
     if (!history.includes(city.name)) {
-      history.push(city.name);
-      localStorage.setItem("city", JSON.stringify(history));
-    } 
-  
+        history.push(city.name);
+        localStorage.setItem("city", JSON.stringify(history));
+    }
+
     historyList.textContent = city.name;
     historyList.classList.add("city-button");
     historyList.onclick = function () {
-      weatherNow(city);
-      weatherInfo(city);
+        weatherNow(city);
+        weatherInfo(city);
     };
-  
+
     listCities.appendChild(historyList);
-  
+
     function findData() {
-      const currentList = localStorage.getItem("city");
-      const history = currentList !== null ? JSON.parse(currentList) : [];
-      return history;
-    } 
-  };
-  
+        const currentList = localStorage.getItem("city");
+        const history = currentList !== null ? JSON.parse(currentList) : [];
+        return history;
+    }
+};
+
 // adding city to local storage
 function cityLocalStorage(city) {
     const addedList = findData();
