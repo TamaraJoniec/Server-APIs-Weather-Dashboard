@@ -66,7 +66,7 @@ function weatherNow(city) {
 
             // Set the background image based on the current weather
             const background = document.querySelector("body");
-            const backgroundImageURL = `url('https://images.unsplash.com/photo-1592210454359-9043f067919b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2670&q=80')`;
+            const backgroundImageURL = `url('https://source.unsplash.com/1600x900/?${data.weather[0].main}')`;
             background.style.backgroundImage = backgroundImageURL;
         });
 }

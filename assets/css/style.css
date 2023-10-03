@@ -4,17 +4,18 @@
 }
 
 body {
-  color: #ffffff;
+  background-color: var(--light) !important;
   font-family: 'Roboto', sans-serif;
   padding: 10px;
 }
+
 .message {
   font-size: 2rem;
   font-weight: bold;
   text-align: center;
   margin: 2rem 0;
   color: #fff;
-  text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  text-shadow: 0px 2px 2px rgba(255, 255, 255, 0.3);
 }
 
 .weather-info {
@@ -22,7 +23,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  background-color: #f5f5f5;
+  background-color: var(--light) !important;
   border-radius: 5px;
   font-size: 20px;
   font-weight: bold;
@@ -45,16 +46,17 @@ h4 {
 }
 
 .previous-searches {
-  color: #284774;  
+  color: #284774;
   font-weight: 700;
   line-height: 1.25;
 }
 
 /* list of clickable searches */
 #search-history {
-   position: relative;
-   z-index: 1;
+  position: relative;
+  z-index: 1;
 }
+
 .list-cities {
   background-color: rgba(255, 255, 255, 0.834);
   padding: 10px;
@@ -65,6 +67,7 @@ h4 {
   overflow-y: auto;
   margin: 2;
 }
+
 .list-cities button {
   display: inline-block;
   margin: 5px;
@@ -137,19 +140,23 @@ h4 {
   height: 250px;
   padding: 20px;
 }
+
 .forecast-card img {
   width: 80px;
   height: 80px;
   margin-bottom: 10px;
 }
+
 .day-of-week {
   font-weight: bold;
   font-size: 20px;
   margin-bottom: 10px;
 }
+
 .forecast-card div:not(.day-of-week) {
   margin-bottom: 5px;
 }
+
 /* Increased the font size of the label and added a bit of margin below it for better readability */
 .search-container {
   display: flex;
@@ -164,6 +171,7 @@ label {
   margin-bottom: 10px;
   color: #555;
 }
+
 /* Centered the input box and search button inside an input-group container using flexbox. */
 .input-group {
   display: flex;
@@ -172,6 +180,7 @@ label {
   width: 100%;
   max-width: 600px;
 }
+
 /* Added some other minor tweaks to make the styles more consistent and polished. */
 #search-input {
   border: 2px solid #ddd;
@@ -186,6 +195,7 @@ label {
   outline: none;
   border-color: #007bff;
 }
+
 /* Changed the background color of the search button to blue and added some hover effects to make it more noticeable and clickable. */
 #search-button {
   background-color: #007bff;
