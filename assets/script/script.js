@@ -14,11 +14,11 @@ const apiKey = "bd4f86e586f7c181c1e585358d3c507c";
 let currentSearch = "";
 
 // Hide the loading message and spinner once the content has finished loading
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
     const loading = document.getElementById('loading');
     loading.style.display = 'none';
-  });
-  
+});
+
 // Changed the fetch request to use async/await syntax to improve readability and simplify the code.
 async function locationURL() {
     const search = document.querySelector("#search-input").value;
@@ -100,7 +100,8 @@ function weatherInfo(city) {
                 const forecastHumidity = document.createElement("div");
 
                 forecastIcon.setAttribute("src", `https://openweathermap.org/img/wn/${data.list[i].weather[0].icon}.png`);
-                const celsiusTemp = (data.list[i].main.temp - 32) * 5 / 9; // convert temperature to Celsius
+                const kelvinTemp = data.list[i].main.temp;
+                const celsiusTemp = kelvinTemp - 273.15;
                 forecastTemp.textContent = `Temperature: ${celsiusTemp.toFixed(0)} °C`;
                 forecastWind.textContent = `Wind: ${data.list[i].wind.speed.toFixed(0)} MPH`;
                 forecastHumidity.textContent = `Humidity: ${data.list[i].main.humidity} %`;
