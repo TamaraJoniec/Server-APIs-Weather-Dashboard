@@ -12,10 +12,10 @@ const apiKey = "bd4f86e586f7c181c1e585358d3c507c";
 
 let currentSearch = "";
 
-// Hide the loading message and spinner once the content has finished loading
-window.addEventListener("load", function () {
-  const loading = document.getElementById("loading");
-  loading.style.display = "none";
+document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () {
+    document.getElementById("current-weather").classList.remove("hidden");
+  }, 2000);
 });
 
 async function locationURL() {
