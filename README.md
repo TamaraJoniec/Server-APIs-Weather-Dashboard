@@ -35,7 +35,7 @@ SO THAT I can plan a trip accordingly
 
 The following image shows the web application's appearance and functionality:
 
-![The weather app includes a search option, a list of cities, and a five-day forecast and current weather conditions for London.](./assets/images/10-server-side-apis-challenge-demo.png)
+![The weather app includes a search option, a list of cities, and a five-day forecast and current weather conditions for London.](./assets/images/Screenshot.png)
 
 * The URL of the functional, deployed application: 
 https://tamarajoniec.github.io/Server-APIs-Weather-Dashboard/
@@ -44,13 +44,6 @@ https://tamarajoniec.github.io/Server-APIs-Weather-Dashboard/
 
 * MIT Licence
  
-## Credits
-Thank you for your help with this project!
-
-Alexis San Javier (Tutor)
-Martin Williams (TA)
-Dane Edwards: Thank you for the guidance and code snippets.
-
 ## References
 https://www.educative.io/answers/difference-between-d-flex-and-d-inline-flex-in-bootstrap-4
 
